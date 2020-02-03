@@ -20,6 +20,15 @@ interface Props {
 }
 
 const Question: React.FC<Props> = props => {
+  const isBestButtonDisabled = (optionNumber: number) => {
+    if (props.best === 0) {
+      return false;
+    }
+    if (optionNumber === props.best) {
+      return false;
+    } else return true;
+  };
+
   return (
     <section>
       <hr />
@@ -33,9 +42,14 @@ const Question: React.FC<Props> = props => {
         <button
           type="button"
           id="bestOptA"
-          className="answer-button best-button"
+          className={
+            isBestButtonDisabled(1)
+              ? "button-disabled"
+              : "answer-button best-button"
+          }
           aria-label="Option A is best"
           onClick={props.bestOptA}
+          disabled={isBestButtonDisabled(1)}
         >
           Best
         </button>
@@ -62,6 +76,7 @@ const Question: React.FC<Props> = props => {
           className="answer-button best-button"
           aria-label="Option B is best"
           onClick={props.bestOptB}
+          disabled={!(props.best === 0 || props.best === 2)}
         >
           Best
         </button>

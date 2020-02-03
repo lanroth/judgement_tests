@@ -3,15 +3,21 @@ import "./App.css";
 import Question from "./Question";
 import SampleQuestionText from "./SampleQuestionText";
 
-// const logo = require("./logo.svg") as string;
-
 const App: React.FC = () => {
   const [best, setBest] = useState(0);
   const [worst, setWorst] = useState(0);
 
   const bestOptA = () => {
+    // selecting option A as best sets the value of best to 1
     setBest(1);
-    localStorage.q1Best = "A";
+    // record candidates response in localStorage
+    if (window.localStorage.getItem("q1Best") !== "A") {
+      writeToLocalStorage("q1Best", "A");
+    }
+    // re-selecting this option a second time resets all options
+    if (best === 1) {
+      setBest(0);
+    }
   };
 
   const bestOptB = () => {
@@ -49,6 +55,7 @@ const App: React.FC = () => {
     localStorage.q1Worst = "D";
   };
 
+  // unify writing to localStorage when multiple questions are added.
   const writeToLocalStorage = (x: string, y: string) => {
     localStorage[x] = y;
   };

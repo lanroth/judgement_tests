@@ -1,6 +1,8 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
+import { unmountComponentAtNode } from "react-dom";
+import { render, fireEvent, waitForElement } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
+import "@testing-library/jest-dom/extend-expect";
 import App from "./App";
 
 let container: any = null;
@@ -28,13 +30,25 @@ test("candidate can select option A as best", () => {
   act(() => {
     render(<App />, container);
   });
-  const button: any = document.querySelector('[aria-label="Option A is best"]');
-  expect(button.textContent).toBe("Best");
+  const bestOptA: any = document.querySelector(
+    '[aria-label="Option A is best"]'
+  );
+  expect(bestOptA.textContent).toBe("Best");
   act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    bestOptA.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
+  // correct response recorded to localStorage
   expect(window.localStorage.getItem("q1Best")).toBe("A");
+  // check selected option is not disabled
+  expect(bestOptA).not.toHaveAttribute("disabled");
+  // check all other buttons labelled Best are disabled
+  const bestOptB: any = document.querySelector(
+    '[aria-label="Option B is best"]'
+  );
+  expect(bestOptB).toHaveAttribute("disabled");
 });
+
+// COALFACE ABOVE
 
 test("candidate can select option B as best", () => {
   act(() => {
@@ -126,4 +140,19 @@ test("candidates can select option D as worst", () => {
     button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
   expect(window.localStorage.getItem("q1Worst")).toBe("D");
+});
+
+// testing reset fuinction for pressing the same button twice
+test("candidate can reset from option A as best", () => {
+  act(() => {
+    render(<App />, container);
+  });
+
+  //Press button twice.
+
+  // const button: any = document.querySelector('[aria-label="Option A is best"]');
+  // act(() => {
+  //   button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  // });
+  // expect(window.localStorage.getItem("q1Best")).toBe("A");
 });
