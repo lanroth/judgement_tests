@@ -54,6 +54,20 @@ const Question: React.FC<Props> = props => {
     }
   };
 
+  const selectedBestStyle = (optionNumber: number) => {
+    // inline style overrides selected button class style
+    if (optionNumber === props.best) {
+      return { backgroundColor: "white" };
+    }
+  };
+
+  const selectedWorstStyle = (optionNumber: number) => {
+    // inline style overrides selected button class style
+    if (optionNumber === props.worst) {
+      return { backgroundColor: "white" };
+    }
+  };
+
   return (
     <section>
       <hr />
@@ -72,6 +86,7 @@ const Question: React.FC<Props> = props => {
               ? "button-disabled"
               : "answer-button best-button"
           }
+          style={selectedBestStyle(1)}
           aria-label="Option A is best"
           onClick={props.bestOptA}
           disabled={isBestButtonDisabled(1)}
@@ -89,6 +104,7 @@ const Question: React.FC<Props> = props => {
               ? "button-disabled"
               : "answer-button worst-button"
           }
+          style={selectedWorstStyle(1)}
           aria-label="Option A is worst"
           onClick={props.worstOptA}
           disabled={isWorstButtonDisabled(1)}
@@ -108,6 +124,7 @@ const Question: React.FC<Props> = props => {
               ? "button-disabled"
               : "answer-button best-button"
           }
+          style={selectedBestStyle(2)}
           aria-label="Option B is best"
           onClick={props.bestOptB}
           disabled={isBestButtonDisabled(2)}
@@ -125,6 +142,7 @@ const Question: React.FC<Props> = props => {
               ? "button-disabled"
               : "answer-button worst-button"
           }
+          style={selectedWorstStyle(2)}
           aria-label="Option B is worst"
           onClick={props.worstOptB}
           disabled={isWorstButtonDisabled(2)}
@@ -144,6 +162,7 @@ const Question: React.FC<Props> = props => {
               ? "button-disabled"
               : "answer-button best-button"
           }
+          style={selectedBestStyle(3)}
           aria-label="Option C is best"
           onClick={props.bestOptC}
           disabled={isBestButtonDisabled(3)}
@@ -161,6 +180,7 @@ const Question: React.FC<Props> = props => {
               ? "button-disabled"
               : "answer-button worst-button"
           }
+          style={selectedWorstStyle(3)}
           aria-label="Option C is worst"
           onClick={props.worstOptC}
           disabled={isWorstButtonDisabled(3)}
@@ -180,6 +200,7 @@ const Question: React.FC<Props> = props => {
               ? "button-disabled"
               : "answer-button best-button"
           }
+          style={selectedBestStyle(4)}
           aria-label="Option D is best"
           onClick={props.bestOptD}
           disabled={isBestButtonDisabled(4)}
@@ -197,6 +218,7 @@ const Question: React.FC<Props> = props => {
               ? "button-disabled"
               : "answer-button worst-button"
           }
+          style={selectedWorstStyle(4)}
           aria-label="Option D is worst"
           onClick={props.worstOptD}
           disabled={isWorstButtonDisabled(4)}

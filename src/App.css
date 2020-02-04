@@ -41,7 +41,6 @@ h1 {
 .best-button:hover {
   background-color: hsl(150, 80%, 40%);
   border-color: hsl(212, 19%, 84%);
-  color: white;
 }
 
 .worst-button {
@@ -51,7 +50,6 @@ h1 {
 .worst-button:hover {
   background-color: hsl(0, 70%, 42%);
   border-color: hsl(212, 19%, 84%);
-  color: white;
 }
 
 /* Submit button */
