@@ -30,6 +30,9 @@ h1 {
   height: 3em;
   width: 4em;
 }
+.button-disabled {
+  opacity: 0.1;
+}
 
 .best-button {
   background-color: hsl(145, 90%, 85%);

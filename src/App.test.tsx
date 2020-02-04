@@ -1,6 +1,8 @@
 import React from "react";
-import { render, unmountComponentAtNode } from "react-dom";
+import { unmountComponentAtNode } from "react-dom";
+import { render, fireEvent, waitForElement } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
+import "@testing-library/jest-dom/extend-expect";
 import App from "./App";
 
 let container: any = null;
@@ -24,95 +26,375 @@ test("app renders without crashing", () => {
   });
 });
 
+//
+// Best button A
+//
 test("candidate can select option A as best", () => {
   act(() => {
     render(<App />, container);
   });
-  const button: any = document.querySelector('[aria-label="Option A is best"]');
-  expect(button.textContent).toBe("Best");
+  const bestOptA: any = document.querySelector(
+    '[aria-label="Option A is best"]'
+  );
+  expect(bestOptA.textContent).toBe("Best");
   act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    bestOptA.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
+  // correct response recorded to localStorage
   expect(window.localStorage.getItem("q1Best")).toBe("A");
+  // check selected option is not disabled
+  expect(bestOptA).not.toHaveAttribute("disabled");
+  // check all other buttons labelled Best are disabled
+  const bestOptB: any = document.querySelector(
+    '[aria-label="Option B is best"]'
+  );
+  expect(bestOptB).toHaveAttribute("disabled");
+  const bestOptC: any = document.querySelector(
+    '[aria-label="Option C is best"]'
+  );
+  expect(bestOptC).toHaveAttribute("disabled");
+  const bestOptD: any = document.querySelector(
+    '[aria-label="Option D is best"]'
+  );
+  expect(bestOptD).toHaveAttribute("disabled");
+  // corresponding worst button is disabled
+  const worstOptA: any = document.querySelector(
+    '[aria-label="Option A is worst"]'
+  );
+  expect(worstOptA).toHaveAttribute("disabled");
+  // re-selecting the same option a 2nd time resets other best buttons
+  act(() => {
+    bestOptA.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+  expect(bestOptA).not.toHaveAttribute("disabled");
+  expect(bestOptB).not.toHaveAttribute("disabled");
+  expect(bestOptC).not.toHaveAttribute("disabled");
+  expect(bestOptD).not.toHaveAttribute("disabled");
 });
 
+//
+// Best button B
+//
 test("candidate can select option B as best", () => {
   act(() => {
     render(<App />, container);
   });
-  const button: any = document.querySelector('[aria-label="Option B is best"]');
-  expect(button.textContent).toBe("Best");
+  const bestOptB: any = document.querySelector(
+    '[aria-label="Option B is best"]'
+  );
+  expect(bestOptB.textContent).toBe("Best");
   act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    bestOptB.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
+  // correct response recorded to localStorage
   expect(window.localStorage.getItem("q1Best")).toBe("B");
+  // check selected option is not disabled
+  expect(bestOptB).not.toHaveAttribute("disabled");
+  // check all other buttons labelled Best are disabled
+  const bestOptA: any = document.querySelector(
+    '[aria-label="Option A is best"]'
+  );
+  expect(bestOptA).toHaveAttribute("disabled");
+  const bestOptC: any = document.querySelector(
+    '[aria-label="Option C is best"]'
+  );
+  expect(bestOptC).toHaveAttribute("disabled");
+  const bestOptD: any = document.querySelector(
+    '[aria-label="Option D is best"]'
+  );
+  expect(bestOptD).toHaveAttribute("disabled");
+  // corresponding worst button is disabled
+  const worstOptB: any = document.querySelector(
+    '[aria-label="Option B is worst"]'
+  );
+  expect(worstOptB).toHaveAttribute("disabled");
+  // re-selecting the same option a 2nd time resets other best buttons
+  act(() => {
+    bestOptB.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+  expect(bestOptA).not.toHaveAttribute("disabled");
+  expect(bestOptB).not.toHaveAttribute("disabled");
+  expect(bestOptC).not.toHaveAttribute("disabled");
+  expect(bestOptD).not.toHaveAttribute("disabled");
 });
 
+//
+// Best button C
+//
 test("candidate can select option C as best", () => {
   act(() => {
     render(<App />, container);
   });
-  const button: any = document.querySelector('[aria-label="Option C is best"]');
-  expect(button.textContent).toBe("Best");
+  const bestOptC: any = document.querySelector(
+    '[aria-label="Option C is best"]'
+  );
+  expect(bestOptC.textContent).toBe("Best");
   act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    bestOptC.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
+  // correct response recorded to localStorage
   expect(window.localStorage.getItem("q1Best")).toBe("C");
+  // check selected option is not disabled
+  expect(bestOptC).not.toHaveAttribute("disabled");
+  // check all other buttons labelled Best are disabled
+  const bestOptA: any = document.querySelector(
+    '[aria-label="Option A is best"]'
+  );
+  expect(bestOptA).toHaveAttribute("disabled");
+  const bestOptB: any = document.querySelector(
+    '[aria-label="Option B is best"]'
+  );
+  expect(bestOptB).toHaveAttribute("disabled");
+  const bestOptD: any = document.querySelector(
+    '[aria-label="Option D is best"]'
+  );
+  expect(bestOptD).toHaveAttribute("disabled");
+  // corresponding worst button is disabled
+  const worstOptC: any = document.querySelector(
+    '[aria-label="Option C is worst"]'
+  );
+  expect(worstOptC).toHaveAttribute("disabled");
+  // re-selecting the same option a 2nd time resets other best buttons
+  act(() => {
+    bestOptC.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+  expect(bestOptA).not.toHaveAttribute("disabled");
+  expect(bestOptB).not.toHaveAttribute("disabled");
+  expect(bestOptC).not.toHaveAttribute("disabled");
+  expect(bestOptD).not.toHaveAttribute("disabled");
 });
 
+//
+// Best button D
+//
 test("candidate can select option D as best", () => {
   act(() => {
     render(<App />, container);
   });
-  const button: any = document.querySelector('[aria-label="Option D is best"]');
-  expect(button.textContent).toBe("Best");
+  const bestOptD: any = document.querySelector(
+    '[aria-label="Option D is best"]'
+  );
+  expect(bestOptD.textContent).toBe("Best");
   act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    bestOptD.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
+  // correct response recorded to localStorage
   expect(window.localStorage.getItem("q1Best")).toBe("D");
+  // check selected option is not disabled
+  expect(bestOptD).not.toHaveAttribute("disabled");
+  // check all other buttons labelled Best are disabled
+  const bestOptA: any = document.querySelector(
+    '[aria-label="Option A is best"]'
+  );
+  expect(bestOptA).toHaveAttribute("disabled");
+  const bestOptB: any = document.querySelector(
+    '[aria-label="Option B is best"]'
+  );
+  expect(bestOptB).toHaveAttribute("disabled");
+  const bestOptC: any = document.querySelector(
+    '[aria-label="Option C is best"]'
+  );
+  expect(bestOptC).toHaveAttribute("disabled");
+  // corresponding worst button is disabled
+  const worstOptD: any = document.querySelector(
+    '[aria-label="Option D is worst"]'
+  );
+  expect(worstOptD).toHaveAttribute("disabled");
+  // re-selecting the same option a 2nd time resets other best buttons
+  act(() => {
+    bestOptD.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+  expect(bestOptA).not.toHaveAttribute("disabled");
+  expect(bestOptB).not.toHaveAttribute("disabled");
+  expect(bestOptC).not.toHaveAttribute("disabled");
+  expect(bestOptD).not.toHaveAttribute("disabled");
 });
 
+//
+// Worst button A
+//
 test("candidates can select option A as worst", () => {
   act(() => {
     render(<App />, container);
   });
-  const button: any = document.querySelector(
+  const worstOptA: any = document.querySelector(
     '[aria-label="Option A is worst"]'
   );
-  expect(button.textContent).toBe("Worst");
+  expect(worstOptA.textContent).toBe("Worst");
   act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    worstOptA.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
+  // correct response recorded to localStorage
   expect(window.localStorage.getItem("q1Worst")).toBe("A");
+  // check selected option is not disabled
+  expect(worstOptA).not.toHaveAttribute("disabled");
+  // check all other buttons labelled Best are disabled
+  const worstOptB: any = document.querySelector(
+    '[aria-label="Option B is worst"]'
+  );
+  expect(worstOptB).toHaveAttribute("disabled");
+  const worstOptC: any = document.querySelector(
+    '[aria-label="Option C is worst"]'
+  );
+  expect(worstOptC).toHaveAttribute("disabled");
+  const worstOptD: any = document.querySelector(
+    '[aria-label="Option D is worst"]'
+  );
+  expect(worstOptD).toHaveAttribute("disabled");
+  // corresponding best button is disabled
+  const bestOptA: any = document.querySelector(
+    '[aria-label="Option A is best"]'
+  );
+  expect(bestOptA).toHaveAttribute("disabled");
+  // re-selecting the same option a 2nd time resets other best buttons
+  act(() => {
+    worstOptA.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+  expect(worstOptA).not.toHaveAttribute("disabled");
+  expect(worstOptB).not.toHaveAttribute("disabled");
+  expect(worstOptC).not.toHaveAttribute("disabled");
+  expect(worstOptD).not.toHaveAttribute("disabled");
 });
 
+//
+// Worst button B
+//
 test("candidates can select option B as worst", () => {
   act(() => {
     render(<App />, container);
   });
-  const button: any = document.querySelector(
+  const worstOptB: any = document.querySelector(
     '[aria-label="Option B is worst"]'
   );
-  expect(button.textContent).toBe("Worst");
+  expect(worstOptB.textContent).toBe("Worst");
   act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    worstOptB.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
+  // correct response recorded to localStorage
   expect(window.localStorage.getItem("q1Worst")).toBe("B");
+  // check selected option is not disabled
+  expect(worstOptB).not.toHaveAttribute("disabled");
+  // check all other buttons labelled Best are disabled
+  const worstOptA: any = document.querySelector(
+    '[aria-label="Option A is worst"]'
+  );
+  expect(worstOptA).toHaveAttribute("disabled");
+  const worstOptC: any = document.querySelector(
+    '[aria-label="Option C is worst"]'
+  );
+  expect(worstOptC).toHaveAttribute("disabled");
+  const worstOptD: any = document.querySelector(
+    '[aria-label="Option D is worst"]'
+  );
+  expect(worstOptD).toHaveAttribute("disabled");
+  // corresponding best button is disabled
+  const bestOptB: any = document.querySelector(
+    '[aria-label="Option B is best"]'
+  );
+  expect(bestOptB).toHaveAttribute("disabled");
+  // re-selecting the same option a 2nd time resets other best buttons
+  act(() => {
+    worstOptB.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+  expect(worstOptA).not.toHaveAttribute("disabled");
+  expect(worstOptB).not.toHaveAttribute("disabled");
+  expect(worstOptC).not.toHaveAttribute("disabled");
+  expect(worstOptD).not.toHaveAttribute("disabled");
 });
 
+//
+// Worst button C
+//
 test("candidates can select option C as worst", () => {
   act(() => {
     render(<App />, container);
   });
-  const button: any = document.querySelector(
+  const worstOptC: any = document.querySelector(
     '[aria-label="Option C is worst"]'
   );
-  expect(button.textContent).toBe("Worst");
+  expect(worstOptC.textContent).toBe("Worst");
   act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+    worstOptC.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
+  // correct response recorded to localStorage
   expect(window.localStorage.getItem("q1Worst")).toBe("C");
+  // check selected option is not disabled
+  expect(worstOptC).not.toHaveAttribute("disabled");
+  // check all other buttons labelled Best are disabled
+  const worstOptA: any = document.querySelector(
+    '[aria-label="Option A is worst"]'
+  );
+  expect(worstOptA).toHaveAttribute("disabled");
+  const worstOptB: any = document.querySelector(
+    '[aria-label="Option B is worst"]'
+  );
+  expect(worstOptB).toHaveAttribute("disabled");
+  const worstOptD: any = document.querySelector(
+    '[aria-label="Option D is worst"]'
+  );
+  expect(worstOptD).toHaveAttribute("disabled");
+  // corresponding best button is disabled
+  const bestOptC: any = document.querySelector(
+    '[aria-label="Option C is best"]'
+  );
+  expect(bestOptC).toHaveAttribute("disabled");
+  // re-selecting the same option a 2nd time resets other best buttons
+  act(() => {
+    worstOptC.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+  expect(worstOptA).not.toHaveAttribute("disabled");
+  expect(worstOptB).not.toHaveAttribute("disabled");
+  expect(worstOptC).not.toHaveAttribute("disabled");
+  expect(worstOptD).not.toHaveAttribute("disabled");
 });
+
+//
+// Worst button D
+//
+test("candidates can select option D as worst", () => {
+  act(() => {
+    render(<App />, container);
+  });
+  const worstOptD: any = document.querySelector(
+    '[aria-label="Option D is worst"]'
+  );
+  expect(worstOptD.textContent).toBe("Worst");
+  act(() => {
+    worstOptD.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+  // correct response recorded to localStorage
+  expect(window.localStorage.getItem("q1Worst")).toBe("D");
+  // check selected option is not disabled
+  expect(worstOptD).not.toHaveAttribute("disabled");
+  // check all other buttons labelled Best are disabled
+  const worstOptA: any = document.querySelector(
+    '[aria-label="Option A is worst"]'
+  );
+  expect(worstOptA).toHaveAttribute("disabled");
+  const worstOptB: any = document.querySelector(
+    '[aria-label="Option B is worst"]'
+  );
+  expect(worstOptB).toHaveAttribute("disabled");
+  const worstOptC: any = document.querySelector(
+    '[aria-label="Option C is worst"]'
+  );
+  expect(worstOptC).toHaveAttribute("disabled");
+  // corresponding best button is disabled
+  const bestOptD: any = document.querySelector(
+    '[aria-label="Option D is best"]'
+  );
+  expect(bestOptD).toHaveAttribute("disabled");
+  // re-selecting the same option a 2nd time resets other best buttons
+  act(() => {
+    worstOptD.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  });
+  expect(worstOptA).not.toHaveAttribute("disabled");
+  expect(worstOptB).not.toHaveAttribute("disabled");
+  expect(worstOptC).not.toHaveAttribute("disabled");
+  expect(worstOptD).not.toHaveAttribute("disabled");
+});
+
+// COALFACE ABOVE
 
 test("candidates can select option D as worst", () => {
   act(() => {
