@@ -21,53 +21,112 @@ const App: React.FC = () => {
   };
 
   const bestOptB = () => {
+    // selecting option B as best sets the value of best to 2
     setBest(2);
-    writeToLocalStorage("q1Best", "B");
+    // record candidates response in localStorage
+    if (window.localStorage.getItem("q1Best") !== "B") {
+      writeToLocalStorage("q1Best", "B");
+    }
+    // re-selecting this option a second time resets all options
+    if (best === 2) {
+      setBest(0);
+    }
   };
 
   const bestOptC = () => {
+    // selecting option C as best sets the value of best to 3
     setBest(3);
-    writeToLocalStorage("q1Best", "C");
+    // record candidates response in localStorage
+    if (window.localStorage.getItem("q1Best") !== "C") {
+      writeToLocalStorage("q1Best", "C");
+    }
+    // re-selecting this option a second time resets all options
+    if (best === 3) {
+      setBest(0);
+    }
   };
 
   const bestOptD = () => {
+    // selecting option D as best sets the value of best to 4
     setBest(4);
-    writeToLocalStorage("q1Best", "D");
+    // record candidates response in localStorage
+    if (window.localStorage.getItem("q1Best") !== "D") {
+      writeToLocalStorage("q1Best", "D");
+    }
+    // re-selecting this option a second time resets all options
+    if (best === 4) {
+      setBest(0);
+    }
   };
 
   const worstOptA = () => {
+    // selecting option A as best sets the value of worst to 1
     setWorst(1);
-    localStorage.q1Worst = "A";
+    // record candidates response in localStorage
+    if (window.localStorage.getItem("q1Worst") !== "A") {
+      writeToLocalStorage("q1Worst", "A");
+    }
+    // re-selecting this option a second time resets all options
+    if (worst === 1) {
+      setWorst(0);
+    }
   };
 
   const worstOptB = () => {
+    // selecting option B as worst sets the value of best to 2
     setWorst(2);
-    localStorage.q1Worst = "B";
+    // record candidates response in localStorage
+    if (window.localStorage.getItem("q1Worst") !== "B") {
+      writeToLocalStorage("q1Worst", "B");
+    }
+    // re-selecting this option a second time resets all options
+    if (worst === 2) {
+      setWorst(0);
+    }
   };
 
   const worstOptC = () => {
+    // selecting option C as worst sets the value of best to 3
     setWorst(3);
-    localStorage.q1Worst = "C";
+    // record candidates response in localStorage
+    if (window.localStorage.getItem("q1Worst") !== "C") {
+      writeToLocalStorage("q1Worst", "C");
+    }
+    // re-selecting this option a second time resets all options
+    if (worst === 3) {
+      setWorst(0);
+    }
   };
 
   const worstOptD = () => {
+    // selecting option A as worst sets the value of best to 4
     setWorst(4);
-    localStorage.q1Worst = "D";
+    // record candidates response in localStorage
+    if (window.localStorage.getItem("q1Worst") !== "D") {
+      writeToLocalStorage("q1Worst", "D");
+    }
+    // re-selecting this option a second time resets all options
+    if (worst === 4) {
+      setWorst(0);
+    }
   };
 
-  // unify writing to localStorage when multiple questions are added.
   const writeToLocalStorage = (x: string, y: string) => {
     localStorage[x] = y;
   };
 
   const submitHandling = () => {
-    alert(
-      "You selected option " +
-        best +
-        " as best, and option " +
-        worst +
-        " as worst."
-    );
+    if (best === 0 || worst === 0) {
+      alert("You MUST select one Best option AND one Worst option");
+    } else {
+      alert(
+        "You selected option " +
+          best +
+          " as best, and option " +
+          worst +
+          " as worst."
+      );
+    }
   };
 
   return (
@@ -79,9 +138,16 @@ const App: React.FC = () => {
         effective) response, AND select one of the buttons on the right to pick
         your "worst" (least effective) response.
       </p>
-      <p>After selecting your answers, press the "submit" button.</p>
+      <p>
+        Pressing the same Best or Worst button a second time deselects your
+        answer and resets your choices.
+      </p>
+      <p>
+        After selecting your answers, press the "submit" button to submit your
+        final answer.
+      </p>
 
-      {/* <p>  TO REMOVE  </p> */}
+      {/*   TO REMOVE   */}
       <hr />
       <p>
         The option you selected as Best is:{" "}
