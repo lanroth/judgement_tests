@@ -1,6 +1,7 @@
 import React from "react";
 
 interface Props {
+  questionNumber: number;
   scenarioText: string;
   optTextA: string;
   optTextB: string;
@@ -72,7 +73,7 @@ const Question: React.FC<Props> = props => {
     <section>
       <hr />
 
-      <h1>Question one</h1>
+      <h1>Question {props.questionNumber}</h1>
       <p id="scenarioText">{props.scenarioText}</p>
 
       <hr />
@@ -83,7 +84,7 @@ const Question: React.FC<Props> = props => {
           id="bestOptA"
           className={
             isBestButtonDisabled(1)
-              ? "button-disabled"
+              ? "answer-button button-disabled"
               : "answer-button best-button"
           }
           style={selectedBestStyle(1)}
@@ -101,7 +102,7 @@ const Question: React.FC<Props> = props => {
           id="worstOptA"
           className={
             isWorstButtonDisabled(1)
-              ? "button-disabled"
+              ? "answer-button button-disabled"
               : "answer-button worst-button"
           }
           style={selectedWorstStyle(1)}
@@ -121,7 +122,7 @@ const Question: React.FC<Props> = props => {
           id="bestOptB"
           className={
             isBestButtonDisabled(2)
-              ? "button-disabled"
+              ? "answer-button button-disabled"
               : "answer-button best-button"
           }
           style={selectedBestStyle(2)}
@@ -139,7 +140,7 @@ const Question: React.FC<Props> = props => {
           id="worstOptB"
           className={
             isWorstButtonDisabled(2)
-              ? "button-disabled"
+              ? "answer-button button-disabled"
               : "answer-button worst-button"
           }
           style={selectedWorstStyle(2)}
@@ -159,7 +160,7 @@ const Question: React.FC<Props> = props => {
           id="bestOptC"
           className={
             isBestButtonDisabled(3)
-              ? "button-disabled"
+              ? "answer-button button-disabled"
               : "answer-button best-button"
           }
           style={selectedBestStyle(3)}
@@ -177,7 +178,7 @@ const Question: React.FC<Props> = props => {
           id="worstOptC"
           className={
             isWorstButtonDisabled(3)
-              ? "button-disabled"
+              ? "answer-button button-disabled"
               : "answer-button worst-button"
           }
           style={selectedWorstStyle(3)}
@@ -197,7 +198,7 @@ const Question: React.FC<Props> = props => {
           id="bestOptD"
           className={
             isBestButtonDisabled(4)
-              ? "button-disabled"
+              ? "answer-button button-disabled"
               : "answer-button best-button"
           }
           style={selectedBestStyle(4)}
@@ -215,7 +216,7 @@ const Question: React.FC<Props> = props => {
           id="worstOptd"
           className={
             isWorstButtonDisabled(4)
-              ? "button-disabled"
+              ? "answer-button button-disabled"
               : "answer-button worst-button"
           }
           style={selectedWorstStyle(4)}
