@@ -393,19 +393,3 @@ test("candidates can select option D as worst", () => {
   expect(worstOptC).not.toHaveAttribute("disabled");
   expect(worstOptD).not.toHaveAttribute("disabled");
 });
-
-// COALFACE ABOVE
-
-test("candidates can select option D as worst", () => {
-  act(() => {
-    render(<App />, container);
-  });
-  const button: any = document.querySelector(
-    '[aria-label="Option D is worst"]'
-  );
-  expect(button.textContent).toBe("Worst");
-  act(() => {
-    button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
-  });
-  expect(window.localStorage.getItem("q1Worst")).toBe("D");
-});

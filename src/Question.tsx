@@ -1,6 +1,7 @@
 import React from "react";
 
 interface Props {
+  questionNumber: number;
   scenarioText: string;
   optTextA: string;
   optTextB: string;
@@ -72,7 +73,7 @@ const Question: React.FC<Props> = props => {
     <section>
       <hr />
 
-      <h1>Question one</h1>
+      <h1>Question {props.questionNumber}</h1>
       <p id="scenarioText">{props.scenarioText}</p>
 
       <hr />
