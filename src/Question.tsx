@@ -71,8 +71,6 @@ const Question: React.FC<Props> = props => {
 
   return (
     <section>
-      <hr />
-
       <h1>Question {props.questionNumber}</h1>
       <p id="scenarioText">{props.scenarioText}</p>
 

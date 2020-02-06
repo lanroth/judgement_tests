@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import "./App.css";
 import Question from "./Question";
-// import SampleQuestionText from "./SampleQuestionText";
 import SampleData from "./SampleData";
 import Outro from "./Outro";
 import Instruct from "./Instruct";
+import Progress from "./Progress";
 
 const App: React.FC = () => {
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -114,6 +114,7 @@ const App: React.FC = () => {
       {showQuestion ? (
         <article>
           <Instruct />
+          <Progress examLength={examLength} questionNumber={questionNumber} />
           <Question
             questionNumber={questionNumber}
             scenarioText={q.scenarioText}
