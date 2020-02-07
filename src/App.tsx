@@ -14,7 +14,7 @@ const App: React.FC = () => {
 
   // mock data
   // NB ONLY EXPORT QUESTIONS not ANSWERS
-  const q = SampleData.examPaper[questionNumber - 1];
+  const scenario = SampleData.examPaper[questionNumber - 1];
 
   const [best, setBest] = useState(0);
   const [worst, setWorst] = useState(0);
@@ -117,11 +117,11 @@ const App: React.FC = () => {
           <Progress examLength={examLength} questionNumber={questionNumber} />
           <Question
             questionNumber={questionNumber}
-            scenarioText={q.scenarioText}
-            optTextA={q.optTextA}
-            optTextB={q.optTextB}
-            optTextC={q.optTextC}
-            optTextD={q.optTextD}
+            scenarioText={scenario.scenarioText}
+            optTextA={scenario.optTextA}
+            optTextB={scenario.optTextB}
+            optTextC={scenario.optTextC}
+            optTextD={scenario.optTextD}
             submitHandling={submitHandling}
             bestOptA={bestOptA}
             bestOptB={bestOptB}
