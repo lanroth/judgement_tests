@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import Question from "./Question";
 import SampleData from "./SampleData";
@@ -7,17 +7,31 @@ import Instruct from "./Instruct";
 import Progress from "./Progress";
 
 const App: React.FC = () => {
+  const [candidateId, setCandidateId] = useState(0);
+  const [examId, setExamId] = useState(0);
+
   const [questionNumber, setQuestionNumber] = useState(1);
 
   const examLength = SampleData.examPaper.length;
   const [showQuestion, setShowQuestion] = useState(true);
 
-  // mock data
-  // NB ONLY EXPORT QUESTIONS not ANSWERS
-  const scenario = SampleData.examPaper[questionNumber - 1];
-
   const [best, setBest] = useState(0);
   const [worst, setWorst] = useState(0);
+
+  // mock data
+  // extract candidate and exam Id number from SampleData
+  const scenario = SampleData.examPaper[questionNumber - 1];
+  useEffect(() => {
+    const setupExaminnation = () => {
+      setCandidateId(SampleData.candidateId);
+      setExamId(SampleData.examId);
+    };
+    setupExaminnation();
+    // console.log(window.location.pathname);
+    // console.log(window.location.href);
+  }, [candidateId, examId]);
+  //
+  //
 
   // selecting option A as best sets the value of best to 1
   const bestOptA = () => {
@@ -95,11 +109,42 @@ const App: React.FC = () => {
     localStorage["q" + questionNumber + x] = y;
   };
 
+  // sending data to the server
+  const sendAttempt = () => {
+    const url =
+      "http://example.com/candidates/answers/" +
+      examId +
+      "/" +
+      questionNumber +
+      "/";
+    const data = { best: best, worst: worst };
+    //
+    console.log(url, data);
+    //
+    fetch(url, {
+      // mode: "no-cors",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "candidate-token": candidateId.toString()
+      },
+      body: JSON.stringify(data)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Success:", data);
+      })
+      .catch(error => {
+        console.error("Error:", error);
+      });
+  };
+
   const submitHandling = () => {
     if (best === 0 || worst === 0) {
       alert("You MUST select one Best option AND one Worst option");
     } else {
       if (questionNumber < examLength) {
+        sendAttempt();
         setQuestionNumber(questionNumber + 1);
         setBest(0);
         setWorst(0);
