@@ -111,13 +111,8 @@ const App: React.FC = () => {
 
   // sending data to the server
   const sendAttempt = () => {
-    const url =
-      "http://example.com/candidates/answers/" +
-      examId +
-      "/" +
-      questionNumber +
-      "/";
-    const data = { best: best, worst: worst };
+    const url = `http://example.com/candidates/answers/${examId}/${questionNumber}/`;
+    const data = { best, worst };
     //
     console.log(url, data);
     //
