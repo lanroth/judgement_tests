@@ -18,9 +18,9 @@ interface QuestionText {
 //   q4Worst: 4
 // };
 
-const candidateId = 123;
+const candidateId = 222;
 
-const examId = 101;
+const examId = 1;
 
 const q1Text: QuestionText = {
   scenarioText:
@@ -75,9 +75,9 @@ const q4Text: QuestionText = {
 let examPaper = [q1Text, q2Text, q3Text, q4Text];
 
 const SampleDataForSJT = {
-  examPaper: examPaper,
-  candidateId: candidateId,
-  examId: examId
+  examPaper,
+  candidateId,
+  examId
 };
 
 // ​q=1&efficacy=best&exam=101&candidate=123&date=2020-01-01

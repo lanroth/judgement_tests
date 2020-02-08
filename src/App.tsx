@@ -111,10 +111,11 @@ const App: React.FC = () => {
 
   // sending data to the server
   const sendAttempt = () => {
-    const url = `http://example.com/candidates/answers/${examId}/${questionNumber}/`;
-    const data = { best, worst };
+    const url = `https://lanroth.com/sjt-backend/candidates/answers/${examId}/${questionNumber -
+      1}/`;
+    const candidateAnswer = { best, worst };
     //
-    console.log(url, data);
+    console.log(url, candidateAnswer);
     //
     fetch(url, {
       // mode: "no-cors",
@@ -123,7 +124,7 @@ const App: React.FC = () => {
         "Content-Type": "application/json",
         "candidate-token": candidateId.toString()
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify(candidateAnswer)
     })
       .then(response => response.json())
       .then(data => {
