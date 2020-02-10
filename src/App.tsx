@@ -7,6 +7,8 @@ import Instruct from "./Instruct";
 import Progress from "./Progress";
 
 const App: React.FC = () => {
+  const [isError, setIsError] = useState(false);
+
   const [candidateId, setCandidateId] = useState(0);
   const [examId, setExamId] = useState(0);
 
@@ -22,11 +24,11 @@ const App: React.FC = () => {
   // extract candidate and exam Id number from SampleData
   const scenario = SampleData.examPaper[questionNumber - 1];
   useEffect(() => {
-    const setupExaminnation = () => {
+    const setupExamination = () => {
       setCandidateId(SampleData.candidateId);
       setExamId(SampleData.examId);
     };
-    setupExaminnation();
+    setupExamination();
     // console.log(window.location.pathname);
     // console.log(window.location.href);
   }, [candidateId, examId]);
@@ -126,11 +128,17 @@ const App: React.FC = () => {
       },
       body: JSON.stringify(candidateAnswer)
     })
-      .then(response => response.json())
+      .then(response => {
+        response.json();
+        if (!response.ok) {
+          setIsError(true);
+        }
+      })
       .then(data => {
         console.log("Success:", data);
       })
       .catch(error => {
+        setIsError(true);
         console.error("Error:", error);
       });
   };
@@ -140,6 +148,7 @@ const App: React.FC = () => {
       alert("You MUST select one Best option AND one Worst option");
     } else {
       if (questionNumber < examLength) {
+        setIsError(false);
         sendAttempt();
         setQuestionNumber(questionNumber + 1);
         setBest(0);
@@ -157,6 +166,7 @@ const App: React.FC = () => {
           <Instruct />
           <Progress examLength={examLength} questionNumber={questionNumber} />
           <Question
+            isError={isError}
             questionNumber={questionNumber}
             scenarioText={scenario.scenarioText}
             optTextA={scenario.optTextA}
