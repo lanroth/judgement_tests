@@ -6,16 +6,21 @@ interface QuestionText {
   optTextD: string;
 }
 
-const markingScheme = {
-  q1Best: 1,
-  q1Worst: 4,
-  q2Best: 3,
-  q2Worst: 2,
-  q3Best: 4,
-  q3Worst: 1,
-  q4Best: 2,
-  q4Worst: 4
-};
+// NOT exported to candidate
+// const sampleMarkingScheme = {
+//   q1Best: 1,
+//   q1Worst: 4,
+//   q2Best: 3,
+//   q2Worst: 2,
+//   q3Best: 4,
+//   q3Worst: 1,
+//   q4Best: 2,
+//   q4Worst: 4
+// };
+
+const candidateId = 222;
+
+const examId = 1;
 
 const q1Text: QuestionText = {
   scenarioText:
@@ -69,6 +74,12 @@ const q4Text: QuestionText = {
 
 let examPaper = [q1Text, q2Text, q3Text, q4Text];
 
-const SampleDataForSJT = { examPaper: examPaper, markingScheme: markingScheme };
+const SampleDataForSJT = {
+  examPaper,
+  candidateId,
+  examId
+};
+
+// ​q=1&efficacy=best&exam=101&candidate=123&date=2020-01-01
 
 export default SampleDataForSJT;
