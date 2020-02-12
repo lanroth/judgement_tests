@@ -42,8 +42,6 @@ test("candidate can select option A as best", () => {
   act(() => {
     bestOptA.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
-  // correct response recorded to localStorage
-  expect(window.localStorage.getItem("q1Best")).toBe("A");
   // check selected option is not disabled
   expect(bestOptA).not.toHaveAttribute("disabled");
   // check all other buttons labelled Best are disabled
@@ -88,8 +86,7 @@ test("candidate can select option B as best", () => {
   act(() => {
     bestOptB.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
-  // correct response recorded to localStorage
-  expect(window.localStorage.getItem("q1Best")).toBe("B");
+
   // check selected option is not disabled
   expect(bestOptB).not.toHaveAttribute("disabled");
   // check all other buttons labelled Best are disabled
@@ -134,8 +131,6 @@ test("candidate can select option C as best", () => {
   act(() => {
     bestOptC.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
-  // correct response recorded to localStorage
-  expect(window.localStorage.getItem("q1Best")).toBe("C");
   // check selected option is not disabled
   expect(bestOptC).not.toHaveAttribute("disabled");
   // check all other buttons labelled Best are disabled
@@ -180,8 +175,6 @@ test("candidate can select option D as best", () => {
   act(() => {
     bestOptD.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
-  // correct response recorded to localStorage
-  expect(window.localStorage.getItem("q1Best")).toBe("D");
   // check selected option is not disabled
   expect(bestOptD).not.toHaveAttribute("disabled");
   // check all other buttons labelled Best are disabled
@@ -226,8 +219,6 @@ test("candidates can select option A as worst", () => {
   act(() => {
     worstOptA.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
-  // correct response recorded to localStorage
-  expect(window.localStorage.getItem("q1Worst")).toBe("A");
   // check selected option is not disabled
   expect(worstOptA).not.toHaveAttribute("disabled");
   // check all other buttons labelled Best are disabled
@@ -272,8 +263,6 @@ test("candidates can select option B as worst", () => {
   act(() => {
     worstOptB.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
-  // correct response recorded to localStorage
-  expect(window.localStorage.getItem("q1Worst")).toBe("B");
   // check selected option is not disabled
   expect(worstOptB).not.toHaveAttribute("disabled");
   // check all other buttons labelled Best are disabled
@@ -318,8 +307,6 @@ test("candidates can select option C as worst", () => {
   act(() => {
     worstOptC.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
-  // correct response recorded to localStorage
-  expect(window.localStorage.getItem("q1Worst")).toBe("C");
   // check selected option is not disabled
   expect(worstOptC).not.toHaveAttribute("disabled");
   // check all other buttons labelled Best are disabled
@@ -364,8 +351,6 @@ test("candidates can select option D as worst", () => {
   act(() => {
     worstOptD.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   });
-  // correct response recorded to localStorage
-  expect(window.localStorage.getItem("q1Worst")).toBe("D");
   // check selected option is not disabled
   expect(worstOptD).not.toHaveAttribute("disabled");
   // check all other buttons labelled Best are disabled

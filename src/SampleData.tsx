@@ -1,9 +1,9 @@
 interface QuestionText {
-  scenarioText: string;
-  optTextA: string;
-  optTextB: string;
-  optTextC: string;
-  optTextD: string;
+  scenarioText: any;
+  optTextA: any;
+  optTextB: any;
+  optTextC: any;
+  optTextD: any;
 }
 
 // NOT exported to candidate
@@ -72,14 +72,34 @@ const q4Text: QuestionText = {
     "Keep your weekly meetings with the department manager focused on your task list and find support from colleagues sitting near you in helping you settle into this role."
 };
 
-let examPaper = [q1Text, q2Text, q3Text, q4Text];
+// let examPaper = [q1Text, q2Text, q3Text, q4Text];
 
-const SampleDataForSJT = {
-  examPaper,
-  candidateId,
-  examId
-};
+// aka examInProgress
+// const SampleDataForSJT = {
+//   questions: [
+//     {
+//       answers: [
+//         q1Text.optTextA,
+//         q1Text.optTextB,
+//         q1Text.optTextC,
+//         q1Text.optTextD
+//       ],
+//       question: q1Text.scenarioText
+//     },
+//     {}
+//   ]
+// };
 
 // ​q=1&efficacy=best&exam=101&candidate=123&date=2020-01-01
+
+const SampleDataForSJT = {
+  questions: [
+    {
+      answers: ["optTextA", "optTextB", "optTextC", "optTextD"],
+      question: "scenarioText"
+    },
+    {}
+  ]
+};
 
 export default SampleDataForSJT;

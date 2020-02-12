@@ -235,8 +235,8 @@ const Question: React.FC<Props> = props => {
       </button>
       {props.submissionError && (
         <span className="error-warning">
-          Sadly we experienced a network error. Please refresh this page, or try
-          again later.
+          Sadly we experienced a submission error. Please refresh this page, or
+          try again later.
         </span>
       )}
     </section>
