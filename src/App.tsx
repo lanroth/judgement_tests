@@ -23,7 +23,7 @@ const App: React.FC = () => {
   const [worst, setWorst] = useState(0);
 
   // mock data
-  // extract candidate and exam Id number from SampleData
+  // extract candidate and exam id numbers from SampleData
   const scenario = SampleData.examPaper[questionNumber - 1];
   useEffect(() => {
     const setupExamination = () => {
@@ -40,80 +40,20 @@ const App: React.FC = () => {
   //
   //
 
-  // selecting option A as best sets the value of best to 1
-  const bestOptA = () => {
-    setBest(1);
-    writeToLocalStorage("Best", "A");
-    if (best === 1) {
+  const selectBest = (x: number) => {
+    if (best === x) {
       setBest(0);
+    } else {
+      setBest(x);
     }
   };
 
-  // selecting option B as best sets the value of best to 2
-  const bestOptB = () => {
-    setBest(2);
-    writeToLocalStorage("Best", "B");
-    if (best === 2) {
-      setBest(0);
-    }
-  };
-
-  // selecting option C as best sets the value of best to 3
-  const bestOptC = () => {
-    setBest(3);
-    writeToLocalStorage("Best", "C");
-    if (best === 3) {
-      setBest(0);
-    }
-  };
-
-  // selecting option D as best sets the value of best to 4
-  const bestOptD = () => {
-    setBest(4);
-    writeToLocalStorage("Best", "D");
-    if (best === 4) {
-      setBest(0);
-    }
-  };
-
-  // selecting option A as worst sets the value of worst to 1
-  const worstOptA = () => {
-    setWorst(1);
-    writeToLocalStorage("Worst", "A");
-    if (worst === 1) {
+  const selectWorst = (x: number) => {
+    if (worst === x) {
       setWorst(0);
+    } else {
+      setWorst(x);
     }
-  };
-
-  // selecting option B as worst sets the value of worst to 2
-  const worstOptB = () => {
-    setWorst(2);
-    writeToLocalStorage("Worst", "B");
-    if (worst === 2) {
-      setWorst(0);
-    }
-  };
-
-  // selecting option C as worst sets the value of worst to 3
-  const worstOptC = () => {
-    setWorst(3);
-    writeToLocalStorage("Worst", "C");
-    if (worst === 3) {
-      setWorst(0);
-    }
-  };
-
-  // selecting option D as worst sets the value of worst to 4
-  const worstOptD = () => {
-    setWorst(4);
-    writeToLocalStorage("Worst", "D");
-    if (worst === 4) {
-      setWorst(0);
-    }
-  };
-
-  const writeToLocalStorage = (x: string, y: string) => {
-    localStorage["q" + questionNumber + x] = y;
   };
 
   // sending data to the server
@@ -121,11 +61,7 @@ const App: React.FC = () => {
     const url = `https://lanroth.com/sjt-backend/candidates/answers/${examId}/${questionNumber -
       1}/`;
     const candidateAnswer = { best, worst };
-    //
-    console.log(url, candidateAnswer);
-    //
     fetch(url, {
-      // mode: "no-cors",
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -183,14 +119,8 @@ const App: React.FC = () => {
             optTextC={scenario.optTextC}
             optTextD={scenario.optTextD}
             submitHandling={submitHandling}
-            bestOptA={bestOptA}
-            bestOptB={bestOptB}
-            bestOptC={bestOptC}
-            bestOptD={bestOptD}
-            worstOptA={worstOptA}
-            worstOptB={worstOptB}
-            worstOptC={worstOptC}
-            worstOptD={worstOptD}
+            selectBest={selectBest}
+            selectWorst={selectWorst}
             best={best}
             worst={worst}
           />

@@ -9,14 +9,8 @@ interface Props {
   optTextC: string;
   optTextD: string;
   submitHandling: () => void;
-  bestOptA: () => void;
-  bestOptB: () => void;
-  bestOptC: () => void;
-  bestOptD: () => void;
-  worstOptA: () => void;
-  worstOptB: () => void;
-  worstOptC: () => void;
-  worstOptD: () => void;
+  selectBest: (x: number) => void;
+  selectWorst: (x: number) => void;
   best: number;
   worst: number;
 }
@@ -70,6 +64,14 @@ const Question: React.FC<Props> = props => {
     }
   };
 
+  const handleBestClick = (x: number) => {
+    props.selectBest(x);
+  };
+
+  const handleWorstClick = (x: number) => {
+    props.selectWorst(x);
+  };
+
   return (
     <section>
       <h1>Question {props.questionNumber}</h1>
@@ -88,7 +90,7 @@ const Question: React.FC<Props> = props => {
           }
           style={selectedBestStyle(1)}
           aria-label="Option A is best"
-          onClick={props.bestOptA}
+          onClick={() => handleBestClick(1)}
           disabled={isBestButtonDisabled(1)}
         >
           Best
@@ -106,7 +108,7 @@ const Question: React.FC<Props> = props => {
           }
           style={selectedWorstStyle(1)}
           aria-label="Option A is worst"
-          onClick={props.worstOptA}
+          onClick={() => handleWorstClick(1)}
           disabled={isWorstButtonDisabled(1)}
         >
           Worst
@@ -126,7 +128,7 @@ const Question: React.FC<Props> = props => {
           }
           style={selectedBestStyle(2)}
           aria-label="Option B is best"
-          onClick={props.bestOptB}
+          onClick={() => handleBestClick(2)}
           disabled={isBestButtonDisabled(2)}
         >
           Best
@@ -144,7 +146,7 @@ const Question: React.FC<Props> = props => {
           }
           style={selectedWorstStyle(2)}
           aria-label="Option B is worst"
-          onClick={props.worstOptB}
+          onClick={() => handleWorstClick(2)}
           disabled={isWorstButtonDisabled(2)}
         >
           Worst
@@ -164,7 +166,7 @@ const Question: React.FC<Props> = props => {
           }
           style={selectedBestStyle(3)}
           aria-label="Option C is best"
-          onClick={props.bestOptC}
+          onClick={() => handleBestClick(3)}
           disabled={isBestButtonDisabled(3)}
         >
           Best
@@ -182,7 +184,7 @@ const Question: React.FC<Props> = props => {
           }
           style={selectedWorstStyle(3)}
           aria-label="Option C is worst"
-          onClick={props.worstOptC}
+          onClick={() => handleWorstClick(3)}
           disabled={isWorstButtonDisabled(3)}
         >
           Worst
@@ -202,7 +204,7 @@ const Question: React.FC<Props> = props => {
           }
           style={selectedBestStyle(4)}
           aria-label="Option D is best"
-          onClick={props.bestOptD}
+          onClick={() => handleBestClick(4)}
           disabled={isBestButtonDisabled(4)}
         >
           Best
@@ -220,7 +222,7 @@ const Question: React.FC<Props> = props => {
           }
           style={selectedWorstStyle(4)}
           aria-label="Option D is worst"
-          onClick={props.worstOptD}
+          onClick={() => handleWorstClick(4)}
           disabled={isWorstButtonDisabled(4)}
         >
           Worst
