@@ -75,7 +75,12 @@ const App: React.FC = () => {
     };
     getExam();
   }, [examId, candidateId]);
-  // NB Remove dependencies array when we start extracting candidateId + examId from url!!!
+  // NB Remove dependencies array when we start extracting candidateId + examId from url
+  // eg use window.location.href
+  // and pattern matching to identify candidateIdFromURL and examIdFromURL
+  // and then call
+  // setCandidateId(candidateIdFromURL);
+  // setExamId(examIdFromURL);
   //
   //
   // mock setting candiata and exam numbers
@@ -86,8 +91,6 @@ const App: React.FC = () => {
       setExamId(1);
     };
     setupMockExamination();
-    // console.log(window.location.pathname);
-    // console.log(window.location.href);
   }, []);
   //
   //

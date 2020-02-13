@@ -75,31 +75,31 @@ const q4Text: QuestionText = {
 // let examPaper = [q1Text, q2Text, q3Text, q4Text];
 
 // aka examInProgress
-// const SampleDataForSJT = {
-//   questions: [
-//     {
-//       answers: [
-//         q1Text.optTextA,
-//         q1Text.optTextB,
-//         q1Text.optTextC,
-//         q1Text.optTextD
-//       ],
-//       question: q1Text.scenarioText
-//     },
-//     {}
-//   ]
-// };
-
-// ​q=1&efficacy=best&exam=101&candidate=123&date=2020-01-01
-
 const SampleDataForSJT = {
   questions: [
     {
-      answers: ["optTextA", "optTextB", "optTextC", "optTextD"],
-      question: "scenarioText"
+      answers: [
+        q1Text.optTextA,
+        q1Text.optTextB,
+        q1Text.optTextC,
+        q1Text.optTextD
+      ],
+      question: q1Text.scenarioText
     },
-    {}
+    {
+      answers: [
+        q2Text.optTextA,
+        q2Text.optTextB,
+        q2Text.optTextC,
+        q2Text.optTextD
+      ],
+      question: q2Text.scenarioText
+    }
   ]
 };
+
+// eg
+// SampleDataForSJT.questions[0].question
+// SampleDataForSJT.questions[0].answers[0]
 
 export default SampleDataForSJT;
