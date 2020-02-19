@@ -40,7 +40,7 @@ const App: React.FC = () => {
     const examInProgress = parseInt(
       window.location.pathname.replace(/\//gi, "")
     );
-    setCandidateId(examInProgress);
+    setExamId(examInProgress);
 
     // ​Identify this user's idToken from URL
     let userIdToken;
@@ -48,7 +48,7 @@ const App: React.FC = () => {
     const idTokenString = searchParams.get("idToken");
     if (idTokenString) {
       userIdToken = parseInt(idTokenString);
-      setExamId(userIdToken);
+      setCandidateId(userIdToken);
     }
 
     // First extract candidateId + examId from url
