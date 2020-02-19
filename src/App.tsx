@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import Question from "./Question";
-// import SampleData from "./SampleData";
 import Outro from "./Outro";
 import Instruct from "./Instruct";
 import Progress from "./Progress";
@@ -13,15 +12,10 @@ const App: React.FC = () => {
   const [submissionError, setSubmissionError] = useState(false);
   const [showQuestion, setShowQuestion] = useState(false);
   const [showOutro, setShowOutro] = useState(false);
-
-  // NB TO CHANGE DEFAULT BACK TO ZERO when we start extracting candidateId from url!!!
-  const [candidateId, setCandidateId] = useState(222);
-  // NB TO CHANGE DEFAULT BACK TO ZERO when we start extracting examId from url!!!
-  const [examId, setExamId] = useState(1);
-
+  const [candidateId, setCandidateId] = useState(0);
+  const [examId, setExamId] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [examLength, setExamLength] = useState(0);
-
   const [best, setBest] = useState(0);
   const [worst, setWorst] = useState(0);
 
@@ -42,9 +36,34 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
+    // ​Identify current exam from URL
+    const examInProgress = parseInt(
+      window.location.pathname.replace(/\//gi, "")
+    );
+    setCandidateId(examInProgress);
+
+    // ​Identify this user's idToken from URL
+    let userIdToken;
+    const searchParams = new URLSearchParams(window.location.search);
+    const idTokenString = searchParams.get("idToken");
+    if (idTokenString) {
+      userIdToken = parseInt(idTokenString);
+      setExamId(userIdToken);
+    }
+
+    // First extract candidateId + examId from url
+    // then
+    // const getCurrentQuestionNumber = () => {};
+    // https://lanroth.com/sjt-backend/candidates/current-question/${examId}/
+    // responseObj.questionNum ??????
+    // async function getExamInProgress(urls) {try,
+    // const ExamInProgress = await Promise.all urls.map, fetch(url), catch, throw}
+    // see
+    //https://www.shawntabrizi.com/code/programmatically-fetch-multiple-apis-parallel-using-async-await-javascript/
+
     // Fetch exam data
     const getExam = () => {
-      const url = `https://lanroth.com/sjt-backend/exams/${examId}/`;
+      const url = `https://lanroth.com/sjt-backend/exams/${examInProgress}/`;
       fetch(url, {
         method: "GET",
         headers: {
@@ -74,26 +93,8 @@ const App: React.FC = () => {
         });
     };
     getExam();
+    // If candidateID > 0 && examID > 0 and examlenght >0 etc then setShowQuestion(true) etc.
   }, [examId, candidateId]);
-  // NB Remove dependencies array when we start extracting candidateId + examId from url
-  // eg use window.location.href
-  // and pattern matching to identify candidateIdFromURL and examIdFromURL
-  // and then call
-  // setCandidateId(candidateIdFromURL);
-  // setExamId(examIdFromURL);
-  //
-  //
-  // mock setting candiata and exam numbers
-  useEffect(() => {
-    const setupMockExamination = () => {
-      // NB delete when we start extracting candidateId and examId from url!!!
-      setCandidateId(222);
-      setExamId(1);
-    };
-    setupMockExamination();
-  }, []);
-  //
-  //
 
   // sending data to the server
   const sendAttempt = () => {
