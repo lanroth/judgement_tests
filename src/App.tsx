@@ -36,14 +36,14 @@ const App: React.FC = () => {
   };
 
   useEffect(() => {
-    // ​Identify current exam from URL
-    const examInProgress = parseInt(
+    // ​Identify current exam number from URL path name eg /101
+    const currentExamNbr: number = parseInt(
       window.location.pathname.replace(/\//gi, "")
     );
-    setExamId(examInProgress);
+    setExamId(currentExamNbr);
 
-    // ​Identify this user's idToken from URL
-    let userIdToken;
+    // ​Identify current user's idToken from URL search parameters eg ?idToken=123
+    let userIdToken: number = 0;
     const searchParams = new URLSearchParams(window.location.search);
     const idTokenString = searchParams.get("idToken");
     if (idTokenString) {
@@ -51,53 +51,74 @@ const App: React.FC = () => {
       setCandidateId(userIdToken);
     }
 
-    // First extract candidateId + examId from url
-    // then
-    // const getCurrentQuestionNumber = () => {};
-    // https://lanroth.com/sjt-backend/candidates/current-question/${examId}/
-    // responseObj.questionNum ??????
-    // async function getExamInProgress(urls) {try,
-    // const ExamInProgress = await Promise.all urls.map, fetch(url), catch, throw}
-    // see
-    //https://www.shawntabrizi.com/code/programmatically-fetch-multiple-apis-parallel-using-async-await-javascript/
-
-    // Fetch exam data
-    const getExam = () => {
-      const url = `https://lanroth.com/sjt-backend/exams/${examInProgress}/`;
-      fetch(url, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "candidate-token": candidateId.toString()
-        }
-      })
-        .then(response => {
-          if (!response.ok) {
+    // Fetch Exam in Progress
+    // Array of URLs for getting candidate's exam and current question from server.
+    const urls: string[] = [
+      `https://lanroth.com/sjt-backend/exams/${currentExamNbr}/`,
+      `https://lanroth.com/sjt-backend/candidates/current-question/${currentExamNbr}/`
+    ];
+    // Awaiting two promises (one for each URL) before proceeding.
+    Promise.all(
+      // Apply fetch to both URLs in our "urls" array.
+      urls.map(url =>
+        fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "candidate-token": userIdToken.toString()
+          }
+        })
+          .then(response => {
+            // Test for "ok" reponse from server
+            if (!response.ok) {
+              setLoadingError(true);
+              setIsLoading(false);
+            }
+            return response.json();
+          })
+          .catch(error => {
             setLoadingError(true);
             setIsLoading(false);
-            setShowQuestion(false);
-          }
-          return response.json();
-        })
-        .then(responseObj => {
-          setExamPaper(responseObj.questions);
-          setExamLength(responseObj.questions.length);
-          setIsLoading(false);
-          setShowQuestion(true);
-        })
-        .catch(error => {
-          setLoadingError(true);
+            console.error("Error:", error);
+          })
+      )
+    )
+      // The Promise.all then fufills to a 2-tuple array, [fetched_exam, fetched_q_nbr]
+      .then(fetchedData => {
+        setExamPaper(fetchedData[0].questions);
+        setExamLength(fetchedData[0].questions.length);
+        // NB question numbers on server array index from zero not one
+        setQuestionNumber(fetchedData[1].questionNum + 1);
+        if (
+          // Test if candidate has already completed this exam.
+          // Server indicates exam complete by returning current question === exam length
+          // which is outside range given server array indexes from zero not one
+          fetchedData[1].questionNum + 1 >
+          fetchedData[0].questions.length
+        ) {
           setIsLoading(false);
           setShowQuestion(false);
-          console.error("Error:", error);
-        });
-    };
-    getExam();
-    // If candidateID > 0 && examID > 0 and examlenght >0 etc then setShowQuestion(true) etc.
-  }, [examId, candidateId]);
+          setShowOutro(true);
+        } else if (
+          // Test exam nbr, user id and exam text have been updated.
+          currentExamNbr > 0 &&
+          userIdToken > 0 &&
+          fetchedData[0].questions.length > 0
+        ) {
+          setIsLoading(false);
+          setShowQuestion(true);
+        } else setLoadingError(true);
+      })
+      .catch(error => {
+        setLoadingError(true);
+        setIsLoading(false);
+        console.error("Error:", error);
+      });
+  }, []);
 
-  // sending data to the server
+  // sending data to server
   const sendAttempt = () => {
+    // NB question numbers on server array index from zero not one, hence ${questionNumber -1}
     const url = `https://lanroth.com/sjt-backend/candidates/answers/${examId}/${questionNumber -
       1}/`;
     const candidateAnswer = { best, worst };
