@@ -13,6 +13,7 @@ const App: React.FC = () => {
   const [showQuestion, setShowQuestion] = useState(false);
   const [showOutro, setShowOutro] = useState(false);
   const [candidateId, setCandidateId] = useState(0);
+  const [candidateName, setCandidateName] = useState("");
   const [examId, setExamId] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [examLength, setExamLength] = useState(0);
@@ -55,11 +56,12 @@ const App: React.FC = () => {
     // Array of URLs for getting candidate's exam and current question from server.
     const urls: string[] = [
       `https://lanroth.com/sjt-backend/exams/${currentExamNbr}/`,
-      `https://lanroth.com/sjt-backend/candidates/current-question/${currentExamNbr}/`
+      `https://lanroth.com/sjt-backend/candidates/current-question/${currentExamNbr}/`,
+      `https://lanroth.com/sjt-backend/candidates/${userIdToken}/`
     ];
     // Awaiting two promises (one for each URL) before proceeding.
     Promise.all(
-      // Apply fetch to both URLs in our "urls" array.
+      // Apply fetch to all URLs in our "urls" array.
       urls.map(url =>
         fetch(url, {
           method: "GET",
@@ -73,8 +75,7 @@ const App: React.FC = () => {
             if (!response.ok) {
               setLoadingError(true);
               setIsLoading(false);
-            }
-            return response.json();
+            } else return response.json();
           })
           .catch(error => {
             setLoadingError(true);
@@ -83,16 +84,18 @@ const App: React.FC = () => {
           })
       )
     )
-      // The Promise.all then fufills to a 2-tuple array, [fetched_exam, fetched_q_nbr]
+      // The Promise.all then fufills to a 2-tuple array
+      // [fetched_exam, fetched_q_nbr, candidate_name]
       .then(fetchedData => {
         setExamPaper(fetchedData[0].questions);
         setExamLength(fetchedData[0].questions.length);
-        // NB question numbers on server array index from zero not one
+        // NB question numbers on server-array index from zero not one
         setQuestionNumber(fetchedData[1].questionNum + 1);
+        setCandidateName(fetchedData[2].name);
         if (
           // Test if candidate has already completed this exam.
           // Server indicates exam complete by returning current question === exam length
-          // which is outside range given server array indexes from zero not one
+          // which is outside range given server-array indexes from zero not one
           fetchedData[1].questionNum + 1 >
           fetchedData[0].questions.length
         ) {
@@ -118,7 +121,7 @@ const App: React.FC = () => {
 
   // sending data to server
   const sendAttempt = () => {
-    // NB question numbers on server array index from zero not one, hence ${questionNumber -1}
+    // NB question numbers on server-array index from zero not one, hence ${questionNumber -1}
     const url = `https://lanroth.com/sjt-backend/candidates/answers/${examId}/${questionNumber -
       1}/`;
     const candidateAnswer = { best, worst };
@@ -173,7 +176,7 @@ const App: React.FC = () => {
       )}
       {showQuestion && (
         <article>
-          <Instruct />
+          <Instruct candidateName={candidateName} />
           <Progress examLength={examLength} questionNumber={questionNumber} />
           <Question
             submissionError={submissionError}
