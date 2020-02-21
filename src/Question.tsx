@@ -73,7 +73,7 @@ const Question: React.FC<Props> = props => {
   };
 
   return (
-    <section>
+    <main>
       <h1>Question {props.questionNumber}</h1>
       <p id="scenarioText">{props.scenarioText}</p>
 
@@ -239,7 +239,7 @@ const Question: React.FC<Props> = props => {
           try again later.
         </span>
       )}
-    </section>
+    </main>
   );
 };
 

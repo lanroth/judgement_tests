@@ -6,7 +6,7 @@ interface Props {
 
 const Instruct: React.FC<Props> = props => {
   return (
-    <section>
+    <header>
       <h1>Instructions</h1>
       <p>
         <em>{props.candidateName}</em>, please select one of the buttons on the
@@ -22,7 +22,7 @@ const Instruct: React.FC<Props> = props => {
         After selecting your answers, press the "submit" button to submit your{" "}
         <em>final</em> answer.
       </p>
-    </section>
+    </header>
   );
 };
 
