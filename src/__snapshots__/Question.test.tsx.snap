@@ -2,7 +2,7 @@
 
 exports[`best=0, worst=0 matches snapshot 1`] = `
 <DocumentFragment>
-  <section>
+  <main>
     <h1>
       Question 1
     </h1>
@@ -133,13 +133,13 @@ exports[`best=0, worst=0 matches snapshot 1`] = `
     >
       Submit
     </button>
-  </section>
+  </main>
 </DocumentFragment>
 `;
 
 exports[`best=1, worst=2 matches snapshot 1`] = `
 <DocumentFragment>
-  <section>
+  <main>
     <h1>
       Question 1
     </h1>
@@ -278,13 +278,13 @@ exports[`best=1, worst=2 matches snapshot 1`] = `
     >
       Submit
     </button>
-  </section>
+  </main>
 </DocumentFragment>
 `;
 
 exports[`best=3, worst=4 matches snapshot 1`] = `
 <DocumentFragment>
-  <section>
+  <main>
     <h1>
       Question 1
     </h1>
@@ -423,6 +423,6 @@ exports[`best=3, worst=4 matches snapshot 1`] = `
     >
       Submit
     </button>
-  </section>
+  </main>
 </DocumentFragment>
 `;
