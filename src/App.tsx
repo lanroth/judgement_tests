@@ -84,7 +84,7 @@ const App: React.FC = () => {
           })
       )
     )
-      // The Promise.all then fufills to a 2-tuple array
+      // The Promise.all then fufills to a 3-tuple array
       // [fetched_exam, fetched_q_nbr, candidate_name]
       .then(fetchedData => {
         setExamPaper(fetchedData[0].questions);
