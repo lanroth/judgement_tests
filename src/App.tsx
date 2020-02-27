@@ -59,7 +59,7 @@ const App: React.FC = () => {
       `https://lanroth.com/sjt-backend/candidates/current-question/${currentExamNbr}/`,
       `https://lanroth.com/sjt-backend/candidates/${userIdToken}/`
     ];
-    // Awaiting two promises (one for each URL) before proceeding.
+    // Awaiting promises (one for each URL) before proceeding.
     Promise.all(
       // Apply fetch to all URLs in our "urls" array.
       urls.map(url =>
@@ -84,7 +84,7 @@ const App: React.FC = () => {
           })
       )
     )
-      // The Promise.all then fufills to a 3-tuple array
+      // The Promise.all then fufills to an array
       // [fetched_exam, fetched_q_nbr, candidate_name]
       .then(fetchedData => {
         setExamPaper(fetchedData[0].questions);
