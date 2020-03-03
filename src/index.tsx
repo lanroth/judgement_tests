@@ -1,8 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import * as serviceWorker from "./serviceWorker";
+
+import App from "./App";
+// import App from "./App" // [to build candidates app]
+// import App from "./AssessorApp" //[to build assessors app]
+// import App from "./AuthorApp" //[to build authors app]
 
 ReactDOM.render(<App />, document.getElementById("root"));
 
