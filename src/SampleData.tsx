@@ -94,6 +94,24 @@ const SampleDataForSJT = {
         q2Text.optTextD
       ],
       question: q2Text.scenarioText
+    },
+    {
+      answers: [
+        q3Text.optTextA,
+        q3Text.optTextB,
+        q3Text.optTextC,
+        q3Text.optTextD
+      ],
+      question: q3Text.scenarioText
+    },
+    {
+      answers: [
+        q4Text.optTextA,
+        q4Text.optTextB,
+        q4Text.optTextC,
+        q4Text.optTextD
+      ],
+      question: q4Text.scenarioText
     }
   ]
 };
