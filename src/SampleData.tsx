@@ -6,21 +6,21 @@ interface QuestionText {
   optTextD: any;
 }
 
-// NOT exported to candidate
+// // NOT exported to candidate
 // const sampleMarkingScheme = {
-//   q1Best: 1,
-//   q1Worst: 4,
-//   q2Best: 3,
-//   q2Worst: 2,
-//   q3Best: 4,
-//   q3Worst: 1,
-//   q4Best: 2,
-//   q4Worst: 4
+//   q1Best: 0,
+//   q1Worst: 3,
+//   q2Best: 2,
+//   q2Worst: 1,
+//   q3Best: 3,
+//   q3Worst: 0,
+//   q4Best: 1,
+//   q4Worst: 3
 // };
 
-const candidateId = 222;
-
-const examId = 1;
+// // exam in progress for a notional candidate
+// const candidateId = 222;
+// const examId = 1;
 
 const q1Text: QuestionText = {
   scenarioText:
@@ -72,9 +72,6 @@ const q4Text: QuestionText = {
     "Keep your weekly meetings with the department manager focused on your task list and find support from colleagues sitting near you in helping you settle into this role."
 };
 
-// let examPaper = [q1Text, q2Text, q3Text, q4Text];
-
-// aka examInProgress
 const SampleDataForSJT = {
   questions: [
     {
@@ -115,9 +112,5 @@ const SampleDataForSJT = {
     }
   ]
 };
-
-// eg
-// SampleDataForSJT.questions[0].question
-// SampleDataForSJT.questions[0].answers[0]
 
 export default SampleDataForSJT;

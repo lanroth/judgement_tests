@@ -1,7 +1,6 @@
 import React from "react";
 import "@testing-library/jest-dom/extend-expect";
 import { render, fireEvent, cleanup } from "@testing-library/react";
-// import ReactDOM from "react-dom";
 
 import Question from "./Question";
 import SampleQuestionText from "./SampleQuestionText";
@@ -21,8 +20,8 @@ test("candidate can see scenario text", () => {
       submitHandling={jest.fn()}
       selectBest={jest.fn()}
       selectWorst={jest.fn()}
-      best={0}
-      worst={0}
+      best={-1}
+      worst={-1}
     />
   );
   expect(container.querySelector("#scenarioText")).toHaveTextContent(
@@ -60,42 +59,42 @@ test("button presses pass correct argument", () => {
       submitHandling={submitMock}
       selectBest={selectBestMock}
       selectWorst={selectWorstMock}
-      best={0}
-      worst={0}
+      best={-1}
+      worst={-1}
     />
   );
 
   fireEvent.click(getByLabelText("Option A is best"));
   expect(selectBestMock).toHaveBeenCalledTimes(1);
-  expect(selectBestMock).toBeCalledWith(1);
+  expect(selectBestMock).toBeCalledWith(0);
   fireEvent.click(getByLabelText("Option B is best"));
   expect(selectBestMock).toHaveBeenCalledTimes(2);
-  expect(selectBestMock).toBeCalledWith(2);
+  expect(selectBestMock).toBeCalledWith(1);
   fireEvent.click(getByLabelText("Option C is best"));
   expect(selectBestMock).toHaveBeenCalledTimes(3);
-  expect(selectBestMock).toBeCalledWith(3);
+  expect(selectBestMock).toBeCalledWith(2);
   fireEvent.click(getByLabelText("Option D is best"));
   expect(selectBestMock).toHaveBeenCalledTimes(4);
-  expect(selectBestMock).toBeCalledWith(4);
+  expect(selectBestMock).toBeCalledWith(3);
 
   fireEvent.click(getByLabelText("Option A is worst"));
   expect(selectWorstMock).toHaveBeenCalledTimes(1);
-  expect(selectWorstMock).toBeCalledWith(1);
+  expect(selectWorstMock).toBeCalledWith(0);
   fireEvent.click(getByLabelText("Option B is worst"));
   expect(selectWorstMock).toHaveBeenCalledTimes(2);
-  expect(selectWorstMock).toBeCalledWith(2);
+  expect(selectWorstMock).toBeCalledWith(1);
   fireEvent.click(getByLabelText("Option C is worst"));
   expect(selectWorstMock).toHaveBeenCalledTimes(3);
-  expect(selectWorstMock).toBeCalledWith(3);
+  expect(selectWorstMock).toBeCalledWith(2);
   fireEvent.click(getByLabelText("Option D is worst"));
   expect(selectWorstMock).toHaveBeenCalledTimes(4);
-  expect(selectWorstMock).toBeCalledWith(4);
+  expect(selectWorstMock).toBeCalledWith(3);
 
   fireEvent.click(getByText("Submit"));
   expect(submitMock).toHaveBeenCalledTimes(1);
 });
 
-test("best=0, worst=0 matches snapshot", () => {
+test("best=(-1), worst=(-1) matches snapshot", () => {
   const selectBestMock = jest.fn();
   const selectWorstMock = jest.fn();
   const submitMock = jest.fn();
@@ -111,8 +110,8 @@ test("best=0, worst=0 matches snapshot", () => {
       submitHandling={submitMock}
       selectBest={selectBestMock}
       selectWorst={selectWorstMock}
-      best={0}
-      worst={0}
+      best={-1}
+      worst={-1}
     />
   );
   expect(asFragment()).toMatchSnapshot();
@@ -126,7 +125,7 @@ test("best=0, worst=0 matches snapshot", () => {
   expect(getByLabelText("Option D is worst")).not.toHaveAttribute("disabled");
 });
 
-test("best=1, worst=2 matches snapshot", () => {
+test("best=0, worst=1 matches snapshot", () => {
   const selectBestMock = jest.fn();
   const selectWorstMock = jest.fn();
   const submitMock = jest.fn();
@@ -142,8 +141,8 @@ test("best=1, worst=2 matches snapshot", () => {
       submitHandling={submitMock}
       selectBest={selectBestMock}
       selectWorst={selectWorstMock}
-      best={1}
-      worst={2}
+      best={0}
+      worst={1}
     />
   );
   expect(asFragment()).toMatchSnapshot();
@@ -157,7 +156,7 @@ test("best=1, worst=2 matches snapshot", () => {
   expect(getByLabelText("Option D is worst")).toHaveAttribute("disabled");
 });
 
-test("best=3, worst=4 matches snapshot", () => {
+test("best=2, worst=3 matches snapshot", () => {
   const selectBestMock = jest.fn();
   const selectWorstMock = jest.fn();
   const submitMock = jest.fn();
@@ -173,8 +172,8 @@ test("best=3, worst=4 matches snapshot", () => {
       submitHandling={submitMock}
       selectBest={selectBestMock}
       selectWorst={selectWorstMock}
-      best={3}
-      worst={4}
+      best={2}
+      worst={3}
     />
   );
   expect(asFragment()).toMatchSnapshot();

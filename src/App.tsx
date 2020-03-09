@@ -17,12 +17,12 @@ const App: React.FC = () => {
   const [examId, setExamId] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [examLength, setExamLength] = useState(0);
-  const [best, setBest] = useState(0);
-  const [worst, setWorst] = useState(0);
+  const [best, setBest] = useState(-1);
+  const [worst, setWorst] = useState(-1);
 
   const selectBest = (x: number) => {
     if (best === x) {
-      setBest(0);
+      setBest(-1);
     } else {
       setBest(x);
     }
@@ -30,7 +30,7 @@ const App: React.FC = () => {
 
   const selectWorst = (x: number) => {
     if (worst === x) {
-      setWorst(0);
+      setWorst(-1);
     } else {
       setWorst(x);
     }
@@ -147,15 +147,15 @@ const App: React.FC = () => {
   };
 
   const submitHandling = () => {
-    if (best === 0 || worst === 0) {
+    if (best === -1 || worst === -1) {
       alert("You MUST select one Best option AND one Worst option");
     } else {
       if (questionNumber < examLength) {
         setSubmissionError(false);
         sendAttempt();
         setQuestionNumber(questionNumber + 1);
-        setBest(0);
-        setWorst(0);
+        setBest(-1);
+        setWorst(-1);
       } else {
         setSubmissionError(false);
         sendAttempt();

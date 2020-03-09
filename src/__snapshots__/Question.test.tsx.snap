@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`best=0, worst=0 matches snapshot 1`] = `
+exports[`best=(-1), worst=(-1) matches snapshot 1`] = `
 <DocumentFragment>
   <main>
     <h1>
@@ -137,7 +137,7 @@ exports[`best=0, worst=0 matches snapshot 1`] = `
 </DocumentFragment>
 `;
 
-exports[`best=1, worst=2 matches snapshot 1`] = `
+exports[`best=0, worst=1 matches snapshot 1`] = `
 <DocumentFragment>
   <main>
     <h1>
@@ -282,7 +282,7 @@ exports[`best=1, worst=2 matches snapshot 1`] = `
 </DocumentFragment>
 `;
 
-exports[`best=3, worst=4 matches snapshot 1`] = `
+exports[`best=2, worst=3 matches snapshot 1`] = `
 <DocumentFragment>
   <main>
     <h1>

@@ -22,7 +22,7 @@ const Question: React.FC<Props> = props => {
       return true;
     }
     // enable if no best option is selected
-    else if (props.best === 0) {
+    else if (props.best === -1) {
       return false;
     }
     // enable if this option is selected thus allowing resetting on 2nd press
@@ -39,7 +39,7 @@ const Question: React.FC<Props> = props => {
       return true;
     }
     // enable if no best option is selected
-    else if (props.worst === 0) {
+    else if (props.worst === -1) {
       return false;
     }
     // enable if this option is selected thus allowing resetting on 2nd press
@@ -84,14 +84,14 @@ const Question: React.FC<Props> = props => {
           type="button"
           id="bestOptA"
           className={
-            isBestButtonDisabled(1)
+            isBestButtonDisabled(0)
               ? "answer-button button-disabled"
               : "answer-button best-button"
           }
-          style={selectedBestStyle(1)}
+          style={selectedBestStyle(0)}
           aria-label="Option A is best"
-          onClick={() => handleBestClick(1)}
-          disabled={isBestButtonDisabled(1)}
+          onClick={() => handleBestClick(0)}
+          disabled={isBestButtonDisabled(0)}
         >
           Best
         </button>
@@ -102,14 +102,14 @@ const Question: React.FC<Props> = props => {
           type="button"
           id="worstOptA"
           className={
-            isWorstButtonDisabled(1)
+            isWorstButtonDisabled(0)
               ? "answer-button button-disabled"
               : "answer-button worst-button"
           }
-          style={selectedWorstStyle(1)}
+          style={selectedWorstStyle(0)}
           aria-label="Option A is worst"
-          onClick={() => handleWorstClick(1)}
-          disabled={isWorstButtonDisabled(1)}
+          onClick={() => handleWorstClick(0)}
+          disabled={isWorstButtonDisabled(0)}
         >
           Worst
         </button>
@@ -122,14 +122,14 @@ const Question: React.FC<Props> = props => {
           type="button"
           id="bestOptB"
           className={
-            isBestButtonDisabled(2)
+            isBestButtonDisabled(1)
               ? "answer-button button-disabled"
               : "answer-button best-button"
           }
-          style={selectedBestStyle(2)}
+          style={selectedBestStyle(1)}
           aria-label="Option B is best"
-          onClick={() => handleBestClick(2)}
-          disabled={isBestButtonDisabled(2)}
+          onClick={() => handleBestClick(1)}
+          disabled={isBestButtonDisabled(1)}
         >
           Best
         </button>
@@ -140,14 +140,14 @@ const Question: React.FC<Props> = props => {
           type="button"
           id="worstOptB"
           className={
-            isWorstButtonDisabled(2)
+            isWorstButtonDisabled(1)
               ? "answer-button button-disabled"
               : "answer-button worst-button"
           }
-          style={selectedWorstStyle(2)}
+          style={selectedWorstStyle(1)}
           aria-label="Option B is worst"
-          onClick={() => handleWorstClick(2)}
-          disabled={isWorstButtonDisabled(2)}
+          onClick={() => handleWorstClick(1)}
+          disabled={isWorstButtonDisabled(1)}
         >
           Worst
         </button>
@@ -160,14 +160,14 @@ const Question: React.FC<Props> = props => {
           type="button"
           id="bestOptC"
           className={
-            isBestButtonDisabled(3)
+            isBestButtonDisabled(2)
               ? "answer-button button-disabled"
               : "answer-button best-button"
           }
-          style={selectedBestStyle(3)}
+          style={selectedBestStyle(2)}
           aria-label="Option C is best"
-          onClick={() => handleBestClick(3)}
-          disabled={isBestButtonDisabled(3)}
+          onClick={() => handleBestClick(2)}
+          disabled={isBestButtonDisabled(2)}
         >
           Best
         </button>
@@ -178,14 +178,14 @@ const Question: React.FC<Props> = props => {
           type="button"
           id="worstOptC"
           className={
-            isWorstButtonDisabled(3)
+            isWorstButtonDisabled(2)
               ? "answer-button button-disabled"
               : "answer-button worst-button"
           }
-          style={selectedWorstStyle(3)}
+          style={selectedWorstStyle(2)}
           aria-label="Option C is worst"
-          onClick={() => handleWorstClick(3)}
-          disabled={isWorstButtonDisabled(3)}
+          onClick={() => handleWorstClick(2)}
+          disabled={isWorstButtonDisabled(2)}
         >
           Worst
         </button>
@@ -198,14 +198,14 @@ const Question: React.FC<Props> = props => {
           type="button"
           id="bestOptD"
           className={
-            isBestButtonDisabled(4)
+            isBestButtonDisabled(3)
               ? "answer-button button-disabled"
               : "answer-button best-button"
           }
-          style={selectedBestStyle(4)}
+          style={selectedBestStyle(3)}
           aria-label="Option D is best"
-          onClick={() => handleBestClick(4)}
-          disabled={isBestButtonDisabled(4)}
+          onClick={() => handleBestClick(3)}
+          disabled={isBestButtonDisabled(3)}
         >
           Best
         </button>
@@ -216,14 +216,14 @@ const Question: React.FC<Props> = props => {
           type="button"
           id="worstOptd"
           className={
-            isWorstButtonDisabled(4)
+            isWorstButtonDisabled(3)
               ? "answer-button button-disabled"
               : "answer-button worst-button"
           }
-          style={selectedWorstStyle(4)}
+          style={selectedWorstStyle(3)}
           aria-label="Option D is worst"
-          onClick={() => handleWorstClick(4)}
-          disabled={isWorstButtonDisabled(4)}
+          onClick={() => handleWorstClick(3)}
+          disabled={isWorstButtonDisabled(3)}
         >
           Worst
         </button>
