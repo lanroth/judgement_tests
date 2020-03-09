@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Instruct from "./Instruct";
+import Safeguard from "./Safeguard";
 
 test("Outro renders without crashing", () => {
   const div = document.createElement("div");
-  ReactDOM.render(<Instruct candidateName={"Adam"} />, div);
+  ReactDOM.render(<Safeguard />, div);
 });

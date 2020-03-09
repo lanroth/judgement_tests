@@ -4,6 +4,7 @@ import Question from "./Question";
 import Outro from "./Outro";
 import Instruct from "./Instruct";
 import Progress from "./Progress";
+import Safeguard from "./Safeguard";
 
 const App: React.FC = () => {
   const [examPaper, setExamPaper] = useState([]);
@@ -12,7 +13,7 @@ const App: React.FC = () => {
   const [submissionError, setSubmissionError] = useState(false);
   const [showQuestion, setShowQuestion] = useState(false);
   const [showOutro, setShowOutro] = useState(false);
-  const [candidateId, setCandidateId] = useState(0);
+  const [candidateId, setCandidateId] = useState(-1);
   const [candidateName, setCandidateName] = useState("");
   const [examId, setExamId] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
@@ -44,7 +45,7 @@ const App: React.FC = () => {
     setExamId(currentExamNbr);
 
     // ​Identify current user's idToken from URL search parameters eg ?idToken=123
-    let userIdToken: number = 0;
+    let userIdToken: number = -1;
     const searchParams = new URLSearchParams(window.location.search);
     const idTokenString = searchParams.get("idToken");
     if (idTokenString) {
@@ -87,17 +88,24 @@ const App: React.FC = () => {
       // The Promise.all then fufills to an array
       // [fetched_exam, fetched_q_nbr, candidate_name]
       .then(fetchedData => {
-        setExamPaper(fetchedData[0].questions);
-        setExamLength(fetchedData[0].questions.length);
+        if (fetchedData[0]) {
+          setExamPaper(fetchedData[0].questions);
+          setExamLength(fetchedData[0].questions.length);
+        }
         // NB question numbers on server-array index from zero not one
-        setQuestionNumber(fetchedData[1].questionNum + 1);
-        setCandidateName(fetchedData[2].name);
+        if (fetchedData[1]) {
+          setQuestionNumber(fetchedData[1].questionNum + 1);
+        }
+        if (fetchedData[2]) {
+          setCandidateName(fetchedData[2].name);
+        }
         if (
           // Test if candidate has already completed this exam.
           // Server indicates exam complete by returning current question === exam length
           // which is outside range given server-array indexes from zero not one
-          fetchedData[1].questionNum + 1 >
-          fetchedData[0].questions.length
+          fetchedData[0] &&
+          fetchedData[1] &&
+          fetchedData[1].questionNum + 1 > fetchedData[0].questions.length
         ) {
           setIsLoading(false);
           setShowQuestion(false);
@@ -167,11 +175,12 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
+      {candidateId === -1 && <Safeguard />}
       {isLoading && <p>Loading...</p>}
       {loadingError && (
         <p className="error-warning">
-          Sadly we experienced a loading error. Please refresh this page, or try
-          again later.
+          Sadly we experienced a loading error. Please carefully check your
+          intended web address and refresh this page, or try again later.
         </p>
       )}
       {showQuestion && (
