@@ -1,7 +1,7 @@
 import React from "react";
 
 const Outro: React.FC = () => {
-  return <p>You have completed your test. Thank you, and good bye.</p>;
+  return <p>Congratulations, you completed your test. Thank you and goodbye.</p>;
 };
 
 export default Outro;
