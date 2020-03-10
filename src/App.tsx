@@ -111,9 +111,10 @@ const App: React.FC = () => {
           setShowQuestion(false);
           setShowOutro(true);
         } else if (
-          // Test exam nbr, user id and exam text have been updated.
+          // Test exam nbr, user id, user name, and exam text have been updated.
           currentExamNbr > 0 &&
           userIdToken > 0 &&
+          fetchedData[2].name.length > 0 &&
           fetchedData[0].questions.length > 0
         ) {
           setIsLoading(false);
