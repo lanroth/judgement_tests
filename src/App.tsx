@@ -5,17 +5,24 @@ import Outro from "./Outro";
 import Instruct from "./Instruct";
 import Progress from "./Progress";
 import Safeguard from "./Safeguard";
+import { backend } from "./ConfigSjt";
 
 const App: React.FC = () => {
   const [examPaper, setExamPaper] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [examId, setExamId] = useState(0);
+  const [errorExamId, setErrorExamId] = useState(false);
+  const [candidateId, setCandidateId] = useState(-1);
+  const [errorCandidateId, setErrorCandidateId] = useState(false);
+  //
+  //
+  // REMCOVE LOADING ERROR
   const [loadingError, setLoadingError] = useState(false);
   const [submissionError, setSubmissionError] = useState(false);
   const [showQuestion, setShowQuestion] = useState(false);
   const [showOutro, setShowOutro] = useState(false);
-  const [candidateId, setCandidateId] = useState(-1);
+
   const [candidateName, setCandidateName] = useState("");
-  const [examId, setExamId] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [examLength, setExamLength] = useState(0);
   const [best, setBest] = useState(-1);
@@ -42,7 +49,11 @@ const App: React.FC = () => {
     const currentExamNbr: number = parseInt(
       window.location.pathname.replace(/\//gi, "")
     );
-    setExamId(currentExamNbr);
+    if (currentExamNbr > 0) {
+      setExamId(currentExamNbr);
+    } else {
+      setErrorExamId(true);
+    }
 
     // ​Identify current user's idToken from URL search parameters eg ?idToken=123
     let userIdToken: number = -1;
@@ -51,7 +62,18 @@ const App: React.FC = () => {
     if (idTokenString) {
       userIdToken = parseInt(idTokenString);
       setCandidateId(userIdToken);
+    } else {
+      setErrorCandidateId(true);
     }
+
+    //
+    //
+    //
+    console.log(backend);
+
+    //
+    //
+    //
 
     // Fetch Exam in Progress
     // Array of URLs for getting candidate's exam and current question from server.
@@ -184,6 +206,11 @@ const App: React.FC = () => {
           intended web address and refresh this page, or try again later.
         </p>
       )}
+      {errorExamId && <p className="error-warning">Couldn't find "exam-id".</p>}
+      {errorCandidateId && (
+        <p className="error-warning">Couldn't find "candidate-id".</p>
+      )}
+
       {showQuestion && (
         <article>
           <Instruct candidateName={candidateName} />
