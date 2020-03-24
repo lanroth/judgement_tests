@@ -79,7 +79,7 @@ const App: React.FC = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "candidate-token": userIdToken.toString()
+          idToken: userIdToken
         }
       });
     };
@@ -110,9 +110,26 @@ const App: React.FC = () => {
         });
     };
 
-    // Have currentExamNbr and userIdToken been update?
+    const getQuestionNumber = () => {
+      return getBackend(`candidates/current-scenario/${currentExamNbr}`)
+        .then(response => {
+          // Test for "ok" reponse from server
+          if (!response.ok) {
+            setErrorQuestionNumber(true);
+            setLoadingError(true);
+            setIsLoading(false);
+            setShowQuestion(false);
+          } else return response.json();
+        })
+        .then(data => {
+          if (data.scenarioNumber) {
+            setQuestionNumber(parseInt(data.scenarioNumber));
+          }
+        });
+    };
+
     if (currentExamNbr > 0 && userIdToken.length > 0) {
-      Promise.all([getExamPaper()])
+      Promise.all([getExamPaper(), getQuestionNumber()])
         .then(() => {
           setIsLoading(false);
           setShowQuestion(true);
