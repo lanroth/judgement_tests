@@ -16,18 +16,14 @@ const App: React.FC = () => {
   const [errorCandidateId, setErrorCandidateId] = useState(false);
   const [examPaper, setExamPaper] = useState([]);
   const [errorExamPaper, setErrorExamPaper] = useState(false);
+  const [examLength, setExamLength] = useState(0);
   const [questionNumber, setQuestionNumber] = useState(1);
   const [errorQuestionNumber, setErrorQuestionNumber] = useState(false);
-
-  //
-  //
-  //
-  const [submissionError, setSubmissionError] = useState(false);
+  const [candidateName, setCandidateName] = useState("");
+  const [errorCandidateName, setErrorCandidateName] = useState(false);
+  const [submissionsError, setSubmissionsError] = useState(false);
   const [showQuestion, setShowQuestion] = useState(false);
   const [showOutro, setShowOutro] = useState(false);
-
-  const [candidateName, setCandidateName] = useState("");
-  const [examLength, setExamLength] = useState(0);
   const [best, setBest] = useState(-1);
   const [worst, setWorst] = useState(-1);
 
@@ -100,6 +96,7 @@ const App: React.FC = () => {
             setExamPaper(data.scenarios);
             setExamLength(data.scenarios.length);
           }
+          return data.scenarios.length;
         })
         .catch(error => {
           setErrorExamPaper(true);
@@ -125,135 +122,98 @@ const App: React.FC = () => {
           if (data.scenarioNumber) {
             setQuestionNumber(parseInt(data.scenarioNumber));
           }
+          return data.scenarioNumber;
+        })
+        .catch(error => {
+          setErrorQuestionNumber(true);
+          setLoadingError(true);
+          setIsLoading(false);
+          setShowQuestion(false);
+          console.error("Error:", error);
         });
     };
 
-    if (currentExamNbr > 0 && userIdToken.length > 0) {
-      Promise.all([getExamPaper(), getQuestionNumber()])
-        .then(() => {
-          setIsLoading(false);
-          setShowQuestion(true);
+    const getCandidateName = () => {
+      return getBackend(`candidates/${userIdToken}`)
+        .then(response => {
+          // Test for "ok" reponse from server
+          if (!response.ok) {
+            setErrorCandidateName(true);
+            setLoadingError(true);
+            setIsLoading(false);
+            setShowQuestion(false);
+          } else return response.json();
+        })
+        .then(data => {
+          if (data.name) {
+            setCandidateName(data.name);
+          }
+          return data.name;
         })
         .catch(error => {
+          setErrorCandidateName(true);
+          setLoadingError(true);
+          setIsLoading(false);
+          setShowQuestion(false);
+          console.error("Error:", error);
+        });
+    };
+
+    // Fetch Exam in progress
+    if (currentExamNbr > 0 && userIdToken.length > 0) {
+      Promise.all([getExamPaper(), getQuestionNumber(), getCandidateName()])
+        .then(fetchedData => {
+          // Test if candidate has already completed this exam.
+          // Server indicates exam complete by returning current question === exam length
+          // which is outside range given server-array indexes from zero not one
+          // exam length = fetchedData[0]
+          // current question number = fetchedData[1]
+          if (fetchedData[1] + 1 > fetchedData[0]) {
+            setIsLoading(false);
+            setShowQuestion(false);
+            setShowOutro(true);
+          } else {
+            setIsLoading(false);
+            setShowQuestion(true);
+          }
+        })
+        .catch(error => {
+          setLoadingError(true);
+          setIsLoading(false);
           setShowQuestion(false);
           console.log(
-            "There has been an error in getting the exam in progress: " +
+            "There has been an error in getting this exam in progress: " +
               error.message
           );
         });
     }
-
-    // Fetch Exam in Progress
-    // Array of URLs for getting candidate's exam and current question from server.
-    // const urls: string[] = [
-    //   `https://lanroth.com/sjt-backend/exams/${currentExamNbr}/`,
-    //   `https://lanroth.com/sjt-backend/candidates/current-question/${currentExamNbr}/`,
-    //   `https://lanroth.com/sjt-backend/candidates/${userIdToken}/`
-    // ];
-    // // Awaiting promises (one for each URL) before proceeding.
-    // Promise.all(
-    //   // Apply fetch to all URLs in our "urls" array.
-    //   urls.map(url =>
-    //     fetch(url, {
-    //       method: "GET",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         "candidate-token": userIdToken.toString()
-    //       }
-    //     })
-    //       .then(response => {
-    //         // Test for "ok" reponse from server
-    //         if (!response.ok) {
-    //           setLoadingError(true);
-    //           setIsLoading(false);
-    //         } else return response.json();
-    //       })
-    //       .catch(error => {
-    //         setLoadingError(true);
-    //         setIsLoading(false);
-    //         console.error("Error:", error);
-    //       })
-    //   )
-    // )
-    //   // The Promise.all then fufills to an array
-    //   // [fetched_exam, fetched_q_nbr, candidate_name]
-    //   .then(fetchedData => {
-    //     if (fetchedData[0]) {
-    //       // setExamPaper(fetchedData[0].questions);
-    //       // setExamLength(fetchedData[0].questions.length);
-    //     }
-    //     // NB question numbers on server-array index from zero not one
-    //     if (fetchedData[1]) {
-    //       setQuestionNumber(fetchedData[1].questionNum + 1);
-    //     }
-    //     if (fetchedData[2]) {
-    //       // setCandidateName(fetchedData[2].name);
-    //     }
-    //     if (
-    //       // Test if candidate has already completed this exam.
-    //       // Server indicates exam complete by returning current question === exam length
-    //       // which is outside range given server-array indexes from zero not one
-    //       fetchedData[0] &&
-    //       fetchedData[1] &&
-    //       fetchedData[1].questionNum + 1 > fetchedData[0].questions.length
-    //     ) {
-    //       setIsLoading(false);
-    //       setShowQuestion(false);
-    //       setShowOutro(true);
-    //     } else if (
-    //       // Test exam nbr, user id, user name, and exam text have been updated.
-    //       // currentExamNbr > 0 &&
-    //       // userIdToken.length > 0 &&
-    //       // fetchedData[2].name.length > 0 &&
-    //       // fetchedData[0].questions.length > 0
-    //     ) {
-    //       setIsLoading(false);
-    //       setShowQuestion(true);
-    //     } else setLoadingError(true);
-    //   })
-    //   .catch(error => {
-    //     setLoadingError(true);
-    //     setIsLoading(false);
-    //     console.error("Error:", error);
-    //   });
-
-    // Test exam nbr, user id, user name, and exam text have been updated.
-    // if (
-    //   currentExamNbr > 0 &&
-    //   userIdToken.length > 0
-    //   // &&
-    //   // fetchedData[2].name.length > 0 &&
-    //   // fetchedData[0].questions.length > 0
-    // ) {
-    //   setIsLoading(false);
-    //   setShowQuestion(true);
-    // } else setLoadingError(true);
   }, []);
 
   // sending data to server
   const sendAttempt = () => {
     // NB question numbers on server-array index from zero not one, hence ${questionNumber -1}
-    const url = `https://lanroth.com/sjt-backend/candidates/answers/${examId}/${questionNumber -
+    const url = `${backend}candidates/submissions/${examId}/${questionNumber -
       1}/`;
     const candidateAnswer = { best, worst };
     fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "candidate-token": candidateId.toString()
+        idToken: candidateId
       },
       body: JSON.stringify(candidateAnswer)
     })
       .then(response => {
+        // Test for "ok" reponse from server
         if (!response.ok) {
-          setSubmissionError(true);
+          setSubmissionsError(true);
         } else {
-          setSubmissionError(false);
+          setSubmissionsError(false);
         }
       })
       .catch(error => {
-        setSubmissionError(true);
-        console.error("Error:", error);
+        setSubmissionsError(true);
+        console.error("Submissions error: ", error);
       });
   };
 
@@ -262,13 +222,13 @@ const App: React.FC = () => {
       alert("You MUST select one Best option AND one Worst option");
     } else {
       if (questionNumber < examLength) {
-        setSubmissionError(false);
+        setSubmissionsError(false);
         sendAttempt();
         setQuestionNumber(questionNumber + 1);
         setBest(-1);
         setWorst(-1);
       } else {
-        setSubmissionError(false);
+        setSubmissionsError(false);
         sendAttempt();
         setShowQuestion(false);
         setShowOutro(true);
@@ -296,13 +256,16 @@ const App: React.FC = () => {
       {errorQuestionNumber && (
         <p className="error-warning">Couldn't find question-number.</p>
       )}
+      {errorCandidateName && (
+        <p className="error-warning">Couldn't find candidate name.</p>
+      )}
 
       {showQuestion && (
         <article>
           <Instruct candidateName={candidateName} />
           <Progress examLength={examLength} questionNumber={questionNumber} />
           <Question
-            submissionError={submissionError}
+            submissionsError={submissionsError}
             questionNumber={questionNumber}
             scenarioText={examPaper[questionNumber - 1]["situation"]}
             optTextA={examPaper[questionNumber - 1]["judgements"][0]}
