@@ -164,10 +164,11 @@ const App: React.FC = () => {
       Promise.all([getExamPaper(), getQuestionNumber(), getCandidateName()])
         .then(fetchedData => {
           // Test if candidate has already completed this exam.
-          // Server indicates exam complete by returning current question === exam length
-          // which is outside range given server-array indexes from zero not one
-          // exam length = fetchedData[0]
-          // current question number = fetchedData[1]
+          // Server indicates exam complete by returning
+          // current-scenario === scenarios.length
+          // which is outside range given server-array indexes from zero not one.
+          // Also exam-length = fetchedData[0]
+          // and current-question-number = fetchedData[1]
           if (fetchedData[1] + 1 > fetchedData[0]) {
             setIsLoading(false);
             setShowQuestion(false);
@@ -193,7 +194,7 @@ const App: React.FC = () => {
   const sendAttempt = () => {
     // NB question numbers on server-array index from zero not one, hence ${questionNumber -1}
     const url = `${backend}candidates/submissions/${examId}/${questionNumber -
-      1}/`;
+      1}`;
     const candidateAnswer = { best, worst };
     fetch(url, {
       method: "POST",
