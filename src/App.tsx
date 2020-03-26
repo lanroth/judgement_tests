@@ -169,6 +169,7 @@ const App: React.FC = () => {
           // which is outside range given server-array indexes from zero not one.
           // Also exam-length = fetchedData[0]
           // and current-question-number = fetchedData[1]
+          // and candidate name = fetchedData[1]
           if (fetchedData[1] + 1 > fetchedData[0]) {
             setIsLoading(false);
             setShowQuestion(false);
@@ -208,8 +209,10 @@ const App: React.FC = () => {
         // Test for "ok" reponse from server
         if (!response.ok) {
           setSubmissionsError(true);
+          setShowQuestion(false);
         } else {
           setSubmissionsError(false);
+          setShowQuestion(true);
         }
       })
       .catch(error => {
@@ -260,13 +263,18 @@ const App: React.FC = () => {
       {errorCandidateName && (
         <p className="error-warning">Couldn't find candidate name.</p>
       )}
+      {submissionsError && (
+        <p className="error-warning">
+          Sadly we experienced a submissions error. Please refresh this page, or
+          try again later.
+        </p>
+      )}
 
       {showQuestion && (
         <article>
           <Instruct candidateName={candidateName} />
           <Progress examLength={examLength} questionNumber={questionNumber} />
           <Question
-            submissionsError={submissionsError}
             questionNumber={questionNumber}
             scenarioText={examPaper[questionNumber - 1]["situation"]}
             optTextA={examPaper[questionNumber - 1]["judgements"][0]}
