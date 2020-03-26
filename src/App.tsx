@@ -120,7 +120,7 @@ const App: React.FC = () => {
         })
         .then(data => {
           if (data.scenarioNumber) {
-            setQuestionNumber(parseInt(data.scenarioNumber));
+            setQuestionNumber(parseInt(data.scenarioNumber) + 1);
           }
           return data.scenarioNumber;
         })
