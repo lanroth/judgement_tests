@@ -1,7 +1,6 @@
 import React from "react";
 
 interface Props {
-  submissionsError: boolean;
   questionNumber: number;
   scenarioText: string;
   optTextA: string;
@@ -233,12 +232,6 @@ const Question: React.FC<Props> = props => {
       <button type="submit" onClick={props.submitHandling}>
         Submit
       </button>
-      {props.submissionsError && (
-        <span className="error-warning">
-          Sadly we experienced a submissions error. Please refresh this page, or
-          try again later.
-        </span>
-      )}
     </main>
   );
 };
