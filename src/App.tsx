@@ -95,8 +95,8 @@ const App: React.FC = () => {
           if (data) {
             setExamPaper(data.scenarios);
             setExamLength(data.scenarios.length);
+            return data.scenarios.length;
           }
-          return data.scenarios.length;
         })
         .catch(error => {
           setErrorExamPaper(true);
@@ -119,10 +119,10 @@ const App: React.FC = () => {
           } else return response.json();
         })
         .then(data => {
-          if (data.scenarioNumber) {
+          if (data) {
             setQuestionNumber(parseInt(data.scenarioNumber) + 1);
+            return data.scenarioNumber;
           }
-          return data.scenarioNumber;
         })
         .catch(error => {
           setErrorQuestionNumber(true);
@@ -145,10 +145,10 @@ const App: React.FC = () => {
           } else return response.json();
         })
         .then(data => {
-          if (data.name) {
+          if (data) {
             setCandidateName(data.name);
+            return data.name;
           }
-          return data.name;
         })
         .catch(error => {
           setErrorCandidateName(true);
@@ -168,13 +168,22 @@ const App: React.FC = () => {
           // current-scenario === scenarios.length
           // which is outside range given server-array indexes from zero not one.
           // Also exam-length = fetchedData[0]
-          // and current-question-number = fetchedData[1]
+          // and current-scenario-number = fetchedData[1]
           // and candidate name = fetchedData[1]
+
+          // if question-number > exam-length
           if (fetchedData[1] + 1 > fetchedData[0]) {
             setIsLoading(false);
             setShowQuestion(false);
             setShowOutro(true);
-          } else {
+          } else if (
+            // if exam-length > 0
+            // and question-number > 0
+            // and candidate has a name
+            fetchedData[0] > 0 &&
+            fetchedData[1] + 1 > 0 &&
+            fetchedData[2].length > 0
+          ) {
             setIsLoading(false);
             setShowQuestion(true);
           }
@@ -212,7 +221,6 @@ const App: React.FC = () => {
           setShowQuestion(false);
         } else {
           setSubmissionsError(false);
-          setShowQuestion(true);
         }
       })
       .catch(error => {
