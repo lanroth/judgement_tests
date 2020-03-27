@@ -15,12 +15,12 @@ const Instruct: React.FC<Props> = props => {
         response.
       </p>
       <p>
-        Pressing the same Best or Worst button a second time deselects your
-        answer and resets your choices.
+        Pressing a Best or Worst button twice will clear your choice and reset
+        the question.
       </p>
       <p>
         After selecting your answers, press the "submit" button to submit your{" "}
-        <em>final</em> answer.
+        <em>final</em> answer for this question.
       </p>
     </header>
   );
