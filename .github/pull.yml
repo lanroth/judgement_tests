@@ -1,5 +1,9 @@
 version: "1"
 rules:
   - base: master
-    upstream: martinmphil:master    # change `wei` to the owner of upstream repo
+    upstream: martinmphil:master
+    mergeMethod: hardreset
+
+  - base: develop
+    upstream: martinmphil:develop
     mergeMethod: hardreset
