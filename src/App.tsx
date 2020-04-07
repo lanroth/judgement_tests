@@ -75,14 +75,14 @@ const App: React.FC = () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          idToken: userIdToken
-        }
+          idToken: userIdToken,
+        },
       });
     };
 
     const getExamPaper = () => {
       return getBackend(`exams/${currentExamNbr}`)
-        .then(response => {
+        .then((response) => {
           // Test for "ok" reponse from server
           if (!response.ok) {
             setErrorExamPaper(true);
@@ -91,14 +91,14 @@ const App: React.FC = () => {
             setShowQuestion(false);
           } else return response.json();
         })
-        .then(data => {
+        .then((data) => {
           if (data) {
             setExamPaper(data.scenarios);
             setExamLength(data.scenarios.length);
             return data.scenarios.length;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           setErrorExamPaper(true);
           setLoadingError(true);
           setIsLoading(false);
@@ -109,7 +109,7 @@ const App: React.FC = () => {
 
     const getQuestionNumber = () => {
       return getBackend(`candidates/current-scenario/${currentExamNbr}`)
-        .then(response => {
+        .then((response) => {
           // Test for "ok" reponse from server
           if (!response.ok) {
             setErrorQuestionNumber(true);
@@ -118,13 +118,13 @@ const App: React.FC = () => {
             setShowQuestion(false);
           } else return response.json();
         })
-        .then(data => {
+        .then((data) => {
           if (data) {
             setQuestionNumber(parseInt(data.scenarioNumber) + 1);
             return data.scenarioNumber;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           setErrorQuestionNumber(true);
           setLoadingError(true);
           setIsLoading(false);
@@ -135,7 +135,7 @@ const App: React.FC = () => {
 
     const getCandidateName = () => {
       return getBackend(`candidates/${userIdToken}`)
-        .then(response => {
+        .then((response) => {
           // Test for "ok" reponse from server
           if (!response.ok) {
             setErrorCandidateName(true);
@@ -144,13 +144,13 @@ const App: React.FC = () => {
             setShowQuestion(false);
           } else return response.json();
         })
-        .then(data => {
+        .then((data) => {
           if (data) {
             setCandidateName(data.name);
             return data.name;
           }
         })
-        .catch(error => {
+        .catch((error) => {
           setErrorCandidateName(true);
           setLoadingError(true);
           setIsLoading(false);
@@ -162,7 +162,7 @@ const App: React.FC = () => {
     // Fetch Exam in progress
     if (currentExamNbr > 0 && userIdToken.length > 0) {
       Promise.all([getExamPaper(), getQuestionNumber(), getCandidateName()])
-        .then(fetchedData => {
+        .then((fetchedData) => {
           // Test if candidate has already completed this exam.
           // Server indicates exam complete by returning
           // current-scenario === scenarios.length
@@ -188,7 +188,7 @@ const App: React.FC = () => {
             setShowQuestion(true);
           }
         })
-        .catch(error => {
+        .catch((error) => {
           setLoadingError(true);
           setIsLoading(false);
           setShowQuestion(false);
@@ -210,11 +210,11 @@ const App: React.FC = () => {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        idToken: candidateId
+        idToken: candidateId,
       },
-      body: JSON.stringify(candidateAnswer)
+      body: JSON.stringify(candidateAnswer),
     })
-      .then(response => {
+      .then((response) => {
         // Test for "ok" reponse from server
         if (!response.ok) {
           setSubmissionsError(true);
@@ -223,7 +223,7 @@ const App: React.FC = () => {
           setSubmissionsError(false);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         setSubmissionsError(true);
         console.error("Submissions error: ", error);
       });
@@ -263,13 +263,13 @@ const App: React.FC = () => {
         <p className="error-warning">Couldn't find candidate-id.</p>
       )}
       {errorExamPaper && (
-        <p className="error-warning">Couldn't find exam paper.</p>
+        <p className="error-warning">Couldn't find exam-paper.</p>
       )}
       {errorQuestionNumber && (
         <p className="error-warning">Couldn't find question-number.</p>
       )}
       {errorCandidateName && (
-        <p className="error-warning">Couldn't find candidate name.</p>
+        <p className="error-warning">Couldn't find candidate-name.</p>
       )}
       {submissionsError && (
         <p className="error-warning">
