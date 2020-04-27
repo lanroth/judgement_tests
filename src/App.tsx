@@ -229,7 +229,9 @@ const App: React.FC = () => {
       });
   };
 
-  const submitHandling = () => {
+  const submitHandling = (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+
     if (best === -1 || worst === -1) {
       alert("You MUST select one Best option AND one Worst option");
     } else {
