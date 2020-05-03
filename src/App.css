@@ -69,9 +69,16 @@ button[type="submit"] {
   color: hsl(0, 100%, 50%);
 }
 
-/* introduce magins at widths > 20em */
 @media only screen and (min-width: 20em) {
   .App {
     margin: 1em;
+  }
+}
+
+@media only screen and (min-width: 52em) {
+  .App {
+    max-width: 50em;
+    margin-left: auto;
+    margin-right: auto;
   }
 }

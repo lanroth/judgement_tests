@@ -1,8 +1,20 @@
 # Situational Judgement Tests
 
-Testing candidate values with Situational Judgement Tests.
+Testing candidate values with [Situational Judgement Tests](https://en.wikipedia.org/wiki/Situational_judgement_test).
 
 ![judgement-tests-logo](https://user-images.githubusercontent.com/37618836/50683939-c5291780-100b-11e9-8bbc-0ba27ca28872.png)
+
+## Demonstrator
+
+![SJT_demo_picture](https://user-images.githubusercontent.com/37618836/80912292-e13de580-8d33-11ea-82a0-cb2444e200a3.jpg)
+
+See [Situational Judgement Tests demonstrator](http://dancewith.co.uk/sjt/).
+
+Mutual exclusivity in two dimensions ensures user can only pick a single best option and a single worst option, which must also differ from each other. 
+
+## Authors' dashboard
+
+Our related "Author's dashboard app" helps assesses the results from these Situational Judgement Tests by summarising candidate scores and formatting data for download as comma separated values. This secure app also allows Authors to create, read, update and delete test questions, and can easily distribute tests to many candidates with batch invites. See [dashboard app repository](https://github.com/martinmphil/judgement_tests_author). 
 
 ## Available Scripts
 

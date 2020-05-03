@@ -7,14 +7,14 @@ interface Props {
   optTextB: string;
   optTextC: string;
   optTextD: string;
-  submitHandling: () => void;
+  submitHandling: (event: { preventDefault: () => void }) => void;
   selectBest: (x: number) => void;
   selectWorst: (x: number) => void;
   best: number;
   worst: number;
 }
 
-const Question: React.FC<Props> = props => {
+const Question: React.FC<Props> = (props) => {
   const isBestButtonDisabled = (optionNumber: number) => {
     // disable if this option is already selected as worst option
     if (optionNumber === props.worst) {
